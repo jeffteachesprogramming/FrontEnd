@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Added for responsiveness -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Title that shows in the top tab -->
+    <title>ToDo List Version02</title>
+    <!-- Reference for the CSS file used in this application. -->
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+    <div class="container">
+        <h1>My ToDo List2</h1>
+
+        <!-- Contains both the text field and the Add button -->
+        <div class="inputRow">
+            <!-- task below is used by JavaScrpt to locate the field using getElementById -->
+            <input id="task" 
+                   type="text" 
+                   placeholder="Add A Task Here...">
+            <!-- When the button is clicked call the JavaScript addNewTask() function -->
+            <button onclick="addNewTask()">Add</button>
+        </div>
+
+        <!-- Buuld the task list dynamically using JavaScript -->
+        <ul id="list"></ul>
+    </div>
+
+    <!-- Ask the user to confirm before a task is/is not deleted -->
+    <div id="confirmOverlay" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+        <div class="confirmBox">
+            <p id="confirmTitle" class="confirmTitle">Delete Task?</p>
+            <!-- JavaScript repeats the task text for the user -->
+            <p class="confirmTask" id="confirmMsg"></p>
+            <p class="confirmSubject">This Delete Cannot Be Undone.</p>
+            <div class="confirmActions">
+                <button id="confirmNo" class="btnCancel">DO NOT Delete This Task</button>
+                <button id="confirmYes" class="btnDelete">DO Delete This Task</button>
+            </div>
+        </div>
+    </div>
+
+
+   <!-- Reference for the JavaScript file used in this application.
+        Putting the line below at the end ot the <body> tag assures
+        that the entire DOM is parsed beofre the script runs. 
+   -->
+    <script src="js/script.js"></script>
+</body>
+</html>

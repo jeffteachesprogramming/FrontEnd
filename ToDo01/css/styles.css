@@ -1,0 +1,11 @@
+body
+{
+    background-color: gold;
+}
+
+h1, p 
+{
+    color: green;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+}

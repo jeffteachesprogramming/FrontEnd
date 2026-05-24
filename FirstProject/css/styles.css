@@ -1,0 +1,40 @@
+body {
+  background-color: lightblue;
+}
+
+h1 {
+  color: white;
+  text-align: center;
+}
+
+h2 {
+  color: green;
+  text-align: left;
+}
+
+h3 {
+  color: orange;
+  text-align: right;
+}
+
+h4 {
+  color: pink;
+  text-align: center;
+}
+
+h5 {
+  color: yellow;
+  text-align: left;
+}
+
+h6 {
+  color: black;
+  text-align: right;
+}
+
+
+p {
+  color: purple;
+  font-family: verdana;
+  font-size: 20px;
+}
