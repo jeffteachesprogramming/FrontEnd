@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payroll Application version01</title>
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+    <header id="appHeader">
+        <h1>Payroll Application Version01</h1>
+        <p>Employee Gross Pay &amp; Accumulator Totals</p>
+    </header>
+
+    <main id="mainContent">
+        <section id="inputCard" aria-label="Employee Input Form">
+            <h2 class="cardTitle">Employee Entry</h2>
+
+            <div class="formGroup">
+                <label for="employeeType">Employee Type</label>
+                <select id="employeeType" aria-required="true">
+                    <option value="">-- Select Employee Type --</option>
+                    <option value="hourly">Hourly Employee</option>
+                    <option value="pieceWorker">PieceWorker Employee</option>
+                    <option value="commission">Commission Employee</option>
+                    <option value="salaried">Salaried Employee</option>
+                </select>
+            </div>
+
+            <!-- Dynamic Employee Fields -->
+            <div id="dynamicFields" aria-live="polite">
+                <!-- Hourly Fields -->
+                <fieldset id="hourlyFields" class="typeFields hidden" 
+                        aria-label="Hourly Employee Details">
+                    <legend>Hourly Details</legend>
+                    <div class="formGroup">
+                        <label for="hoursWorked">Hours Worked (0.00 - 84.00)</label>
+                        <input type="number" id="hoursWorked" 
+                            min="0.00" max="84.00" step="0.5" 
+                            placeholder="e.g. 40.00">
+                    </div>
+                    <div class="formGroup">
+                        <label for="hourlyRate">Hourly Rate (0.00 - 99.99)</label>
+                        <div class="prefixWrap">
+                            <span>$</span>
+                            <input type="number" id="hourlyRate" 
+                                   min="0.00" max="99.99" step="0.5" 
+                                   placeholder="e.g. 25.00">
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- PieceWorker Fields -->
+                <fieldset id="pieceWorkerFields" class="typeFields hidden" 
+                        aria-label="PieceWorker Employee Details">
+                    <legend>PieceWorker Details</legend>
+                    <div class="formGroup">
+                        <label for="piecesMade">Pieces Made (0 - 100)</label>
+                        <input type="number" id="piecesMade" 
+                            min="0" max="100" step="1" 
+                            placeholder="e.g. 37">
+                    </div>
+                    <div class="formGroup">
+                        <label for="pricePerPiece">Price Per Piece (0.01 - 1.00)</label>
+                        <div class="prefixWrap">
+                            <span>$</span>
+                            <input type="number" id="pricePerPiece" 
+                                   min="0.01" max="1.00" step="0.01" 
+                                   placeholder="e.g. .50">
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- Commission Fields -->
+                <fieldset id="commissionFields" class="typeFields hidden" 
+                        aria-label="Commission Employee Details">
+                    <legend>Commission Details</legend>
+                    <div class="formGroup">
+                        <label for="salesAmount">Sales Amount (0.00 - 100000.00)</label>
+                        <div class="prefixWrap">
+                            <span>$</span>
+                            <input type="number" id="salesAmount" 
+                            min="0.00" max="100000.00" step="1000.00" 
+                            placeholder="e.g. 50000.00">
+                        </div>
+                    </div>
+                    <div class="formGroup">
+                        <label for="commissionPercentage">Commission Percentage (0.00 - 0.30)</label>
+                        <input type="number" id="commissionPercentage" 
+                            min="0.00" max="0.30" step="0.01" 
+                            placeholder="e.g. .20">
+                    </div>
+                </fieldset>
+
+                <!-- Salaried Fields -->
+                <fieldset id="salariedFields" class="typeFields hidden" 
+                        aria-label="Salaried Employee Details">
+                    <legend>Salaried Details</legend>
+                    <div class="formGroup">
+                        <label for="salary">Salary (0.00 - 100000.00)</label>
+                        <div class="prefixWrap">
+                            <span>$</span>
+                            <input type="number" id="salary" 
+                                   min="0.00" max="100000.00" step="1000.00" 
+                                   placeholder="e.g. 50000.00">
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <!-- Buttons -->
+            <div class="btnRow">
+                <button id="btnCalculate" class="btnPrimary" type="button">Calculate</button>
+                <button id="btnClear" type="button">Clear</button>
+                <button id="btnShowTotals" type="button">Show Totals</button>
+            </div>
+
+            <p id="errorMsg" role="alert" aria-live="assertive"></p>
+        </section>
+
+         <!-- Results -->
+        <section class="resultsCard" aria-label="Gross Pay Results">
+            <h2 class="cardTitle">Results</h2>
+
+            <div id="resultsPlaceholder">
+                <p>Results will appear here after the user clicks the <strong>Calculate</strong> button</p>
+            </div>
+ 
+            <ul id="resultsList" aria-label="Calculate Pay Entries"></ul>
+        </section>
+    </main>
+
+    <!-- Modal Accumulator Totals -->
+     <div id="totalsModal" class="modalOverlay hidden" 
+          role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modalBox">
+            <button id="btnCloseModal" class="modalClose" 
+                    aria-label="Close Total Dialog">&times;
+            </button>
+
+            <h2 id="modalTitle">Accumulator Totals</h2>
+
+            <p class="modalSubtitle">
+                Running Gross Pay Sums Since Page Loaded.
+            </p>
+
+            <dl class="totalsGrid">
+                <dt>Hourly Employees</dt> <dd id="totalHourly">$0.00</dd>
+                <dt>PieceWorker Employees</dt> <dd id="totalPieceWorker">$0.00</dd>
+                <dt>Commission Employees</dt> <dd id="totalCommission">$0.00</dd>
+                <dt>Salaried Employees</dt> <dd id="totalSalaried">$0.00</dd>
+            </dl>
+
+            <div class="grandTotalRow">
+                <span>Grand Total</span>
+                <span id="grandTotal">$0.00</span>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>

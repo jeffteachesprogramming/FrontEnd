@@ -1,0 +1,541 @@
+//  Constants
+//  Hourly Employee
+const MINHOURS  =     0;
+const MAXHOURS  =    84;
+const MINHRATE  =     0.00;
+const MAXHRATE  =    99.99;
+
+//  PieceWorker Employee
+const MINPIECES =     0;
+const MAXPIECES =   100;
+const MINPPP    =     0.01;
+const MAXPPP    =     1.00;
+
+//  Commission Employee
+const MINSALES =      0.00;
+const MAXSALES = 100000.00;
+const MINPCT   =      0.00;
+const MAXPCT   =      0.30;
+
+//  Salaried Employee
+const MINSAL   =      0.00;
+const MAXSAL   = 100000.00;
+
+//  Accumulators
+let totalHourlyGrossPays      = 0;
+let totalPieceWorkerGrossPays = 0;
+let totalCommissionGrossPays  = 0;
+let totalSalariedGrossPays    = 0;
+
+//  Input Variables
+const employeeTypeSelect        = document.getElementById("employeeType");
+const hoursWorkedInput          = document.getElementById("hoursWorked");
+const hourlyRateInput           = document.getElementById("hourlyRate");
+const piecesMadeInput           = document.getElementById("piecesMade");
+const pricePerPieceInput        = document.getElementById("pricePerPiece");
+const salesAmountInput          = document.getElementById("salesAmount");
+const commissionPercentageInput = document.getElementById("commissionPercentage");
+const salariedInput             = document.getElementById("salary");
+
+//  FieldSet Variables
+const hourlyFieldSet       = document.getElementById("hourlyFields");
+const pieceWorkerFieldSet  = document.getElementById("pieceWorkerFields");
+const commissionFieldSet   = document.getElementById("commissionFields");
+const salariedFieldSet     = document.getElementById("salariedFields");
+
+//  FiedSet Array
+const allFieldSets = [
+                        hourlyFieldSet,
+                        pieceWorkerFieldSet,
+                        commissionFieldSet,
+                        salariedFieldSet
+                     ]
+
+//  Buttons
+const btnCalculate       = document.getElementById("btnCalculate");
+const btnClear           = document.getElementById("btnClear");
+const btnShowTotals      = document.getElementById("btnShowTotals");
+const btnCloseModal      = document.getElementById("btnCloseModal");
+
+//  Result Area Variables
+const resultsPlaceholder = document.getElementById("resultsPlaceholder");
+const resultsList        = document.getElementById("resultsList");
+const errorMsg           = document.getElementById("errorMsg");
+
+//  Totals Variables
+const totalsModal         = document.getElementById("totalsModal");
+const totalHourly        = document.getElementById("totalHourly");
+const totalPieceWorker   = document.getElementById("totalPieceWorker");
+const totalCommission    = document.getElementById("totalCommission");
+const totalSalaried      = document.getElementById("totalSalaried");
+const grandTotal         = document.getElementById("grandTotal");
+
+//  Validation Helper Function
+function validateNumericInput(theInput, label, min, max)
+{
+    const trimmedTheInput = theInput.value.trim();
+
+    //  Check for empty input
+    if (trimmedTheInput === "")
+    {
+        return {valid: false, value: NaN, message: `${label} Is Required.`};
+    }
+
+    //  We had a numeric input. Set it then range check it
+    const num = parseFloat(trimmedTheInput);
+
+    //  Check for out-of-range (OOR) input
+    if (num < min || num > max)
+    {
+        return {valid : false, value: num, message: `${label} Must Be Between ${min} And ${max}`};
+    }
+
+    //  We had valid numeric input
+    return {valid: true, value: num, message: ""};
+}
+
+//  Make sure that when we change employeeType it is handled correctly
+
+//  First, hide every employeeType fieldset. Call this before actually
+//  showing the correct fieldset.
+function hideAllFieldSets()
+{
+    allFieldSets.forEach((fs) => fs.classList.add('hidden'));
+}
+
+//  Other helper functions
+
+//  Show any errors
+function showErrors(message)
+{
+    errorMsg.textContent = message;
+
+    return false;
+}
+
+//  Clear all errors
+function clearErrors()
+{
+    errorMsg.textContent = "";
+}
+
+//  Format an amount to currency
+function formatToCurrency(amount)
+{
+    return amount.toLocaleString("en-US",
+                    {style:                 "currency",
+                        currency:              "USD",
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    });
+}
+
+//  Next when the employeeType changes, show the matching
+//  fieldset.
+function onEmployeeTypeChange()
+{
+    const empType = employeeTypeSelect.value;
+
+    //  Clear any existing error messages
+    clearErrors();
+
+    //  Hide all fieldsets
+    hideAllFieldSets();
+
+    //  Then show the selected fieldset
+    switch (empType)
+    {
+        case "hourly":
+            hourlyFieldSet.classList.remove("hidden");
+
+            //  Move the focus to the first hourlyFieldSet input
+            hoursWorkedInput.focus();
+            break;
+        
+            case "pieceWorker":
+            pieceWorkerFieldSet.classList.remove("hidden");
+
+            //  Move the focus to the first pieceWorkerFieldSet input
+            piecesMadeInput.focus();
+            break;
+            
+        case "commission":
+            commissionFieldSet.classList.remove("hidden");
+
+            //  Move the focus to the first commissionFieldSet input
+            salesAmountInput.focus();
+            break;
+        
+        case "salaried":
+            salariedFieldSet.classList.remove("hidden");
+
+            //  Move the focus to the first salariedFieldSet input
+            salariedInput.focus();
+            break;
+
+        default:
+            return;
+        }
+}
+
+//  Append a new result card to the results list panel.
+//  Also hide the placeholder text if this is the first entry.
+function appendResult(typeLabel, grossPay, message)
+{
+    resultsPlaceholder.classList.add("hidden");
+
+    //  Build the list item (li).
+    const li = document.createElement("li");
+    li.classList.add("resultItem");
+
+    li.innerHTML = 
+        `<span class="resultType">${typeLabel}</span>
+        <span class="resultAmount">${formatToCurrency(grossPay)}</span>
+        <span class="resultMessage">${message}</span>`;
+    
+    //  Prepend so newest element will appear on top
+    resultsList.insertBefore(li, resultsList.firstChild);
+}
+
+//  Update the modal totals display with the current values of
+//  the accumulators. This will be called each time the Show
+//  Totals button is clicked.
+function refreshModalTotals()
+{
+    const grandTotalAmt =   totalHourlyGrossPays     + totalPieceWorkerGrossPays +
+                            totalCommissionGrossPays + totalSalariedGrossPays;
+    
+    totalHourly.textContent      = formatToCurrency(totalHourlyGrossPays);
+    totalPieceWorker.textContent = formatToCurrency(totalPieceWorkerGrossPays);
+    totalCommission.textContent  = formatToCurrency(totalCommissionGrossPays);
+    totalSalaried.textContent    = formatToCurrency(totalSalariedGrossPays);
+    grandTotal.textContent       = formatToCurrency(grandTotalAmt);
+}
+
+//  Main calculation handler. Handle the situation whenever a user
+//  clicks the btnCalculate button. It will validate the selected
+//  employee type and its associated input. It will then compute
+//  the gross pay, update the associated accumulator, and append
+//  the result to the results panel.
+function onCalculate()
+{
+    clearErrors();
+
+    //  Validate employee type
+    const type = employeeTypeSelect.value;
+
+    if (!type)
+    {
+        showErrors("Please Select An Employee Type!")
+        employeeTypeSelect.focus();
+        return;
+    }
+
+    let grossPay  = 0;
+    let typeLabel = "";
+    let message   = "";
+
+    switch(type)
+    {
+        case "hourly":
+        {
+            const hoursResult = validateNumericInput(hoursWorkedInput, 
+                                                        "Hours Worked", 
+                                                    MINHOURS, MAXHOURS);
+            if (!hoursResult.valid)
+            {
+                showErrors(hoursResult.message);
+                hoursWorkedInput.focus();
+                return;
+
+            }
+
+            const rateResult = validateNumericInput(hourlyRateInput, 
+                                                    "Hourly Rate", 
+                                                    MINHRATE, MAXHRATE);
+            if (!rateResult.valid)
+            {
+                showErrors(rateResult.message);
+                hourlyRateInput.focus();
+                return;
+                
+            }
+
+            //  Do the calculation
+            const calc = calculateHourlyGrossPay(hoursResult.value, rateResult.value);
+            grossPay   = calc.grossPay;
+            message    = calc.message;
+            typeLabel  = "Hourly Employee";
+
+            //  Update the hourly employee gross pay accumulator
+            totalHourlyGrossPays += grossPay;
+            break;
+        }
+
+        case "pieceWorker":
+        {
+            const piecesResult = validateNumericInput(piecesMadeInput, 
+                                                        "Pieces Made", 
+                                                        MINPIECES, MAXPIECES);
+            if (!piecesResult.valid)
+            {
+                showErrors(piecesResult.message);
+                piecesMadeInput.focus();
+                return;
+            }
+
+            const priceResult = validateNumericInput(pricePerPieceInput, 
+                                                    "Price Per Piece", 
+                                                    MINPPP, MAXPPP);
+            if (!priceResult.valid)
+            {
+                showErrors(priceResult.message);
+                pricePerPieceInput.focus();
+                return;              
+            }
+
+            //  Do the calculation
+            const calc = calculatePieceWorkerGrossPay(piecesResult.value, priceResult.value);
+            grossPay   = calc.grossPay;
+            message    = calc.message;
+            typeLabel  = "PieceWorker Employee";
+
+            //  Update the pieceWorker employee gross pay accumulator
+            totalPieceWorkerGrossPays += grossPay;
+            break;                
+        }
+
+        case "commission":
+        {
+            const salesResult = validateNumericInput(salesAmountInput, 
+                                                        "Sales Amount", 
+                                                        MINSALES, MAXSALES);
+            if (!salesResult.valid)
+            {
+                showErrors(salesResult.message);
+                salesAmountInput.focus();
+                return;
+            }
+
+            const percentageResult = validateNumericInput(commissionPercentageInput, 
+                                                            "Commission Percentage", 
+                                                            MINPCT, MAXPCT);
+            if (!percentageResult.valid)
+            {
+                showErrors(percentageResult.message);
+                commissionPercentageInput.focus();
+                return;              
+            }
+
+            //  Do the calculation
+            const calc = calculateCommissionGrossPay(salesResult.value, percentageResult.value);
+            grossPay   = calc.grossPay;
+            message    = calc.message;
+            typeLabel  = "Commission Employee";
+
+            //  Update the commission employee gross pay accumulator
+            totalCommissionGrossPays += grossPay;
+            break;                
+        }
+
+        case "salaried":
+        {
+            const salaryResult = validateNumericInput(salariedInput, 
+                                                        "Salary", 
+                                                        MINSAL, MAXSAL);
+            if (!salaryResult.valid)
+            {
+                showErrors(salaryResult.message);
+                salariedInput.focus();
+                return;              
+            }
+
+            //  Do the calculation
+            const calc = calculateSalariedGrossPay(salaryResult.value);
+            grossPay   = calc.grossPay;
+            message    = calc.message;
+            typeLabel  = "Salaried Employee";
+
+            //  Update the salaried employee gross pay accumulator
+            totalSalariedGrossPays += grossPay;
+            break;
+        }
+
+        default:
+            showErrors("Unknown Employee Type. Please Try Again");
+            break;
+    }
+
+    //  Show the results in the results panel
+    appendResult(typeLabel, grossPay, message);
+}
+
+//  Calculate each gross pay functions
+function calculateHourlyGrossPay(hours, rate)
+{
+    const MAXNONOT = 40.0;
+    const OTRATE  =  1.5;
+    let gross     =  0.0;
+    let otHours   =  0.0;
+    let message   = "";
+
+    //  Straight time (no OT)
+    if (hours <= MAXNONOT)
+    {
+        gross   = hours * rate;
+        message = `${hours} hours x $${rate.toFixed(2)} per hour`;
+    }
+    //  Overtime worked
+    else
+    {
+        otHours = hours - MAXNONOT;
+
+        gross   = MAXNONOT * rate +
+                    (otHours * rate * OTRATE);
+        message = `${MAXNONOT} hours at $${rate.toFixed(2)} + ${otHours} at $${(rate * OTRATE).toFixed(2) * OTRATE}`
+    }
+
+    return {grossPay: gross, message};
+}
+
+function calculatePieceWorkerGrossPay(pieces, price)
+{
+    let gross   = 0.0;
+    let message = "";
+
+    gross = pieces * price;
+
+    message = `${pieces} pieces made x $${price.toFixed(2)} per piece`;
+
+    return {grossPay: gross, message};
+}
+
+function calculateCommissionGrossPay(sales, percentage)
+{
+    let gross   = 0.0;
+    let message = "";
+
+    gross = sales * percentage;
+
+    message = `${sales.toFixed(2)} sales amount x ${(percentage * 100).toFixed(0)} commission percentage`;
+
+    return {grossPay: gross, message};
+}
+
+function calculateSalariedGrossPay(salary)
+{
+    let message = "";
+    let gross   = salary;
+
+    message = `$${salary.toFixed(2)} salary`;
+
+    return {grossPay: gross, message};
+}
+
+//  Clear handler. It will reset the form completely. It will
+//  clear all inputs, hide the employee type-specific fieldsets,
+//  and reset the results area. It will not reset the
+//  accumulator totals.
+function onClear()
+{
+    //  Reset the employee type dropdown
+    employeeTypeSelect.value = "";
+
+    //  Clear all of the numeric inputs
+    [
+        hoursWorkedInput, hourlyRateInput,
+        piecesMadeInput,  pricePerPieceInput,
+        salesAmountInput, commissionPercentageInput,
+        salariedInput
+    ].forEach((input) => {
+                            input.value = "";
+                            });
+    
+    //  Hide all employee type-specific fieldsets
+    hideAllFieldSets();
+
+    //  Clear any error messages
+    clearErrors();
+
+    //  Clear the results list and restore the placeholders
+    resultsList.innerHTML = "";
+    resultsPlaceholder.classList.remove("hidden");
+    
+    //  Return the focus to the dropdown
+    employeeTypeSelect.focus();
+}
+
+//  The openModal() will open the accumulator totals modal.
+//  It refreshes the displayed values before showing them,
+//  so that all totals are up-to-date.
+function openModal()
+{
+    refreshModalTotals();
+    totalsModal.classList.remove("hidden");
+
+    //  Move the focus into the modal
+    btnCloseModal.focus();
+}
+
+//  The closeModal() will close the accumulator totals modal
+//  return the focus to the buttonthat opened it.
+function closeModal()
+{
+    totalsModal.classList.add("hidden");
+    btnShowTotals.focus();
+}
+
+//  Wire up the buttons accordingly
+btnCalculate.addEventListener("click", onCalculate);
+btnClear.addEventListener("click", onClear);
+btnShowTotals.addEventListener("click", openModal);
+btnCloseModal.addEventListener("click", closeModal);
+
+//  Close the modal when clicking outside of the modal box
+totalsModal.addEventListener("click", function(e)
+{
+    //  Only want to if the click is on the overlay
+    if (e.target === totalsModal)
+    {
+        closeModal();
+    }
+});
+
+//  Allow the user to press <etner> for the Calculate button
+//  (this has already been defined as the default for <button>)
+btnCalculate.addEventListener("keydown", function(e)
+{
+    if (e.key === "Enter")
+    {
+        onCalculate();
+    }
+});
+
+//  onEmployeeTypeChange() event handler
+employeeTypeSelect.addEventListener("change", onEmployeeTypeChange);
+
+//  Initialization. This will be the code to run on page load.
+//  It will be called once the script is parsed and the DOM
+//  is ready. It will ensure that the form starts in a clean
+//  state regardless of any browser default behavior.
+(function init() {
+    //  Make sure no employee type has been preselected
+    employeeTypeSelect.value = "";
+
+    //  Hide all fieldsets
+    hideAllFieldSets();
+
+    //  Clear all inputs
+    [
+        hoursWorkedInput, hourlyRateInput,
+        piecesMadeInput, pricePerPieceInput,
+        salesAmountInput, commissionPercentageInput,
+        salariedInput
+    ].forEach((input) => {input.value = "";});
+
+    //  Ensure that the error area is blank
+    clearErrors();
+
+    //  Place focus on the employee type dropdown
+    employeeTypeSelect.focus();
+})()
