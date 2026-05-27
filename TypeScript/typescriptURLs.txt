@@ -1,18 +1,33 @@
-boot.dev learn TypeScript 						- 	https://www.boot.dev/courses/learn-typescript
+boot.dev learn TypeScript 
+https://www.boot.dev/courses/learn-typescript
 
-TypeScript homepage 							- 	https://www.typescriptlang.org/docs/?utm_source=chatgpt.com
+TypeScript homepage 
+https://www.typescriptlang.org/docs/?utm_source=chatgpt.com
 
-TypeScript for the New Programmer 					- 	https://www.typescriptlang.org/docs/handbook/typescript-from-scratch.html
+TypeScript for the New Programmer
+https://www.typescriptlang.org/docs/handbook/typescript-from-scratch.html
 
-TypeScript for JavaScript Programmers					-	https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.htm
+TypeScript for JavaScript Programmers
+https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html
 
-TypeScript The Basics							-	https://www.typescriptlang.org/docs/handbook/2/basic-types.html
+TypeScript The Basics
+https://www.typescriptlang.org/docs/handbook/2/basic-types.html
 
-TypeScript Playground							-	https://www.typescriptlang.org/play/
+TypeScript Playground
+https://www.typescriptlang.org/play/
 
-FreeCodeCamp Learn TypeScript – A Comprehensive Guide for Beginners	-	https://www.freecodecamp.org/news/typescript-for-beginners-guide/
+VIDEOS:
+=======
 
-FreeCodeCamp Learn TypeScript in 1 Hour					-	https://www.freecodecamp.org/news/learn-typescript-in-1-hour/
+TypeScript In 5 Minutes: A VERY Brief Intro by Colt Steele
+https://www.youtube.com/watch?v=V78lbWLKMxo
 
-FreeCodeCamp Learn TypeScript – The Ultimate Beginners Guide		-	https://www.freecodecamp.org/news/learn-typescript-beginners-guide/
+FreeCodeCamp Learn TypeScript – A Comprehensive Guide for Beginners
+https://www.freecodecamp.org/news/typescript-for-beginners-guide/
+
+FreeCodeCamp Learn TypeScript in 1 Hour
+https://www.freecodecamp.org/news/learn-typescript-in-1-hour/
+
+FreeCodeCamp Learn TypeScript – The Ultimate Beginners Guide
+https://www.freecodecamp.org/news/learn-typescript-beginners-guide/
 
