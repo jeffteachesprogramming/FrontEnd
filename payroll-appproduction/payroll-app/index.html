@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payroll System — Home</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header>
+    <div class="logo-mark">P</div>
+    <span class="logo-text">Pay<span>roll</span> Pro</span>
+    <nav>
+      <a href="index.html" class="active">Home</a>
+      <a href="hourly.html">Hourly</a>
+      <a href="piecework.html">Piecework</a>
+      <a href="commission.html">Commission</a>
+      <a href="salary.html">Salary</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <div class="version-badge">&#10022; Version 4.0</div>
+    <h1 class="page-title">Employee Payroll System</h1>
+    <p class="page-subtitle">Select an employee category below to calculate gross pay. Each type has its own dedicated calculator with full input validation.</p>
+
+    <div class="menu-grid">
+
+      <a href="hourly.html" class="menu-card">
+        <div class="card-icon">⏱</div>
+        <div class="card-title">Hourly Worker</div>
+        <div class="card-desc">Calculate pay based on hours worked and hourly rate. Includes automatic overtime at 1.5× for hours beyond 40.</div>
+        <div class="card-arrow">→</div>
+      </a>
+
+      <a href="piecework.html" class="menu-card">
+        <div class="card-icon">🔧</div>
+        <div class="card-title">Piece Worker</div>
+        <div class="card-desc">Calculate pay based on number of pieces produced and the price paid per piece.</div>
+        <div class="card-arrow">→</div>
+      </a>
+
+      <a href="commission.html" class="menu-card">
+        <div class="card-icon">📈</div>
+        <div class="card-title">Commission Worker</div>
+        <div class="card-desc">Calculate pay based on total sales and a commission percentage (up to 30%).</div>
+        <div class="card-arrow">→</div>
+      </a>
+
+      <a href="salary.html" class="menu-card">
+        <div class="card-icon">💼</div>
+        <div class="card-title">Salaried Worker</div>
+        <div class="card-desc">Enter a fixed weekly or annual salary. The validated salary amount is the gross pay.</div>
+        <div class="card-arrow">→</div>
+      </a>
+
+    </div>
+
+    <div class="card" style="padding: 20px 28px;">
+      <div style="display:flex; gap:24px; flex-wrap:wrap;">
+        <div>
+          <div style="font-size:11px; color:var(--text-dim); text-transform:uppercase; letter-spacing:.08em; font-weight:600; margin-bottom:4px;">Overtime Threshold</div>
+          <div style="font-family:'DM Mono',monospace; color:var(--accent); font-size:15px;">40.00 hrs</div>
+        </div>
+        <div>
+          <div style="font-size:11px; color:var(--text-dim); text-transform:uppercase; letter-spacing:.08em; font-weight:600; margin-bottom:4px;">Overtime Rate</div>
+          <div style="font-family:'DM Mono',monospace; color:var(--accent); font-size:15px;">1.5×</div>
+        </div>
+        <div>
+          <div style="font-size:11px; color:var(--text-dim); text-transform:uppercase; letter-spacing:.08em; font-weight:600; margin-bottom:4px;">Max Commission</div>
+          <div style="font-family:'DM Mono',monospace; color:var(--accent); font-size:15px;">30%</div>
+        </div>
+        <div>
+          <div style="font-size:11px; color:var(--text-dim); text-transform:uppercase; letter-spacing:.08em; font-weight:600; margin-bottom:4px;">Max Salary</div>
+          <div style="font-family:'DM Mono',monospace; color:var(--accent); font-size:15px;">$100,000</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="validation.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => UI.setActiveNav());
+  </script>
+</body>
+</html>

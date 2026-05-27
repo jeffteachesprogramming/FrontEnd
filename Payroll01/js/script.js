@@ -392,7 +392,10 @@ function calculateHourlyGrossPay(hours, rate)
 
         gross   = MAXNONOT * rate +
                     (otHours * rate * OTRATE);
-        message = `${MAXNONOT} hours at $${rate.toFixed(2)} + ${otHours} at $${(rate * OTRATE).toFixed(2) * OTRATE}`
+
+        //message = `${MAXNONOT} hours at $${rate.toFixed(2)} + ${otHours} at $${(rate * OTRATE).toFixed(2) * OTRATE}`
+
+        message = `${MAXNONOT} hours × $${rate.toFixed(2)} + ${otHours} OT hrs × $${otRate.toFixed(2)}`;
     }
 
     return {grossPay: gross, message};
@@ -417,7 +420,7 @@ function calculateCommissionGrossPay(sales, percentage)
 
     gross = sales * percentage;
 
-    message = `${sales.toFixed(2)} sales amount x ${(percentage * 100).toFixed(0)} commission percentage`;
+    message = `${sales.toFixed(2)} sales amount x ${(percentage * 100).toFixed(0)}% commission percentage`;
 
     return {grossPay: gross, message};
 }

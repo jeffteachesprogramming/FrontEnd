@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payroll — Hourly Worker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header>
+    <div class="logo-mark">P</div>
+    <span class="logo-text">Pay<span>roll</span> Pro</span>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="hourly.html" class="active">Hourly</a>
+      <a href="piecework.html">Piecework</a>
+      <a href="commission.html">Commission</a>
+      <a href="salary.html">Salary</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <div class="version-badge">⏱ Hourly Worker</div>
+    <h1 class="page-title">Hourly Pay Calculator</h1>
+    <p class="page-subtitle">Enter hours worked (0–84) and the hourly rate (up to $99.99). Overtime at 1.5× applies to all hours beyond 40.</p>
+
+    <div class="card">
+
+      <div class="field">
+        <label for="hours">Hours Worked</label>
+        <input
+          type="number"
+          id="hours"
+          placeholder="e.g. 45.5"
+          min="0" max="84"
+          step="0.01"
+          autocomplete="off"
+        />
+        <div class="field-hint">Between 0 and 84 hours per week</div>
+        <div class="field-error" id="hours-error"></div>
+      </div>
+
+      <div class="field">
+        <label for="rate">Hourly Rate ($)</label>
+        <input
+          type="number"
+          id="rate"
+          placeholder="e.g. 22.50"
+          min="0" max="99.99"
+          step="0.01"
+          autocomplete="off"
+        />
+        <div class="field-hint">Between $0.00 and $99.99 per hour</div>
+        <div class="field-error" id="rate-error"></div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="calculate()">Calculate Pay</button>
+        <button class="btn btn-ghost" onclick="resetForm()">Reset</button>
+      </div>
+
+    </div>
+
+    <!-- Result panel -->
+    <div class="result-panel" id="result-panel">
+      <div class="result-title">Pay Summary</div>
+      <div class="result-rows">
+        <div class="result-row">
+          <span class="label">Hours Worked</span>
+          <span class="value" id="res-hours">—</span>
+        </div>
+        <div class="result-row">
+          <span class="label">Hourly Rate</span>
+          <span class="value" id="res-rate">—</span>
+        </div>
+        <div class="result-row" id="res-ot-row" style="display:none;">
+          <span class="label">Overtime Hours</span>
+          <span class="value" id="res-ot-hours">—</span>
+        </div>
+        <div class="result-row" id="res-ot-pay-row" style="display:none;">
+          <span class="label">Overtime Pay (1.5×)</span>
+          <span class="value" id="res-ot-pay">—</span>
+        </div>
+      </div>
+      <div class="result-divider"></div>
+      <div class="result-gross">
+        <span class="label">
+          Gross Pay
+          <span class="overtime-badge" id="ot-badge" style="display:none;">Overtime</span>
+        </span>
+        <span class="value" id="res-gross">—</span>
+      </div>
+    </div>
+
+    <a href="index.html" style="display:inline-flex; align-items:center; gap:6px; margin-top:28px; color:var(--text-muted); text-decoration:none; font-size:13px; transition:color .2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-muted)'">
+      ← Back to Menu
+    </a>
+  </main>
+
+  <script src="validation.js"></script>
+  <script>
+    // Constants (mirrors C# constants)
+    const MIN_HOURS   =  0.00;
+    const MAX_HOURS   = 84.00;
+    const MIN_RATE    =  0.00;
+    const MAX_RATE    = 99.99;
+    const MAX_NON_OT  = 40.00;
+    const OVER_RATE   =  1.5;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      UI.setActiveNav();
+      UI.attachLiveClear('hours', 'hours-error');
+      UI.attachLiveClear('rate',  'rate-error');
+    });
+
+    function calculate() {
+      UI.clearAllErrors();
+      UI.hideResult('result-panel');
+
+      const hoursVal = document.getElementById('hours').value.trim();
+      const rateVal  = document.getElementById('rate').value.trim();
+      const hoursIn  = document.getElementById('hours');
+      const rateIn   = document.getElementById('rate');
+      const hoursErr = document.getElementById('hours-error');
+      const rateErr  = document.getElementById('rate-error');
+
+      // Validate hours
+      const hCheck = Validation.validateDecimal(hoursVal, 'Hours Worked', MIN_HOURS, MAX_HOURS);
+      if (!hCheck.valid) { UI.showError(hoursIn, hoursErr, hCheck.errors[0]); }
+
+      // Validate rate
+      const rCheck = Validation.validateDecimal(rateVal, 'Hourly Rate', MIN_RATE, MAX_RATE);
+      if (!rCheck.valid) { UI.showError(rateIn, rateErr, rCheck.errors[0]); }
+
+      if (!hCheck.valid || !rCheck.valid) return;
+
+      const hours = parseFloat(hoursVal);
+      const rate  = parseFloat(rateVal);
+      const isOT  = hours > MAX_NON_OT;
+
+      // Calculate gross pay (mirrors calculateGrossPayHourly)
+      let gross, otHours, otPay;
+      if (!isOT) {
+        gross = hours * rate;
+      } else {
+        otHours = hours - MAX_NON_OT;
+        otPay   = otHours * rate * OVER_RATE;
+        gross   = MAX_NON_OT * rate + otPay;
+      }
+
+      // Populate results
+      document.getElementById('res-hours').textContent = Format.decimal(hours, 2) + ' hrs';
+      document.getElementById('res-rate').textContent  = Format.currency(rate);
+      document.getElementById('res-gross').textContent = Format.currency(gross);
+
+      const otRow    = document.getElementById('res-ot-row');
+      const otPayRow = document.getElementById('res-ot-pay-row');
+      const otBadge  = document.getElementById('ot-badge');
+
+      if (isOT) {
+        document.getElementById('res-ot-hours').textContent = Format.decimal(otHours, 2) + ' hrs';
+        document.getElementById('res-ot-pay').textContent   = Format.currency(otPay);
+        otRow.style.display    = 'flex';
+        otPayRow.style.display = 'flex';
+        otBadge.style.display  = 'inline-block';
+      } else {
+        otRow.style.display    = 'none';
+        otPayRow.style.display = 'none';
+        otBadge.style.display  = 'none';
+      }
+
+      UI.showResult('result-panel');
+    }
+
+    function resetForm() {
+      document.getElementById('hours').value = '';
+      document.getElementById('rate').value  = '';
+      UI.clearAllErrors();
+      UI.hideResult('result-panel');
+      document.getElementById('hours').focus();
+    }
+
+    // Allow Enter key to submit
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Enter') calculate();
+    });
+  </script>
+</body>
+</html>

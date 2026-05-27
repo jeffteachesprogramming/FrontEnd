@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BMI Calculator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div class="page-wrap">
+    <header class="site-header">
+      <span class="logo-mark">&#9632;</span>
+      <span class="logo-text">BMI</span>
+    </header>
+
+    <main class="card" role="main">
+      <div class="card-intro">
+        <h1>Body Mass Index</h1>
+        <p class="subtitle">A screening tool based on height and weight</p>
+      </div>
+
+      <div class="unit-toggle" role="group" aria-label="Unit system">
+        <button class="toggle-btn active" id="btn-imperial" onclick="setUnit('imperial')">Imperial</button>
+        <button class="toggle-btn" id="btn-metric" onclick="setUnit('metric')">Metric</button>
+      </div>
+
+      <div class="field-grid">
+
+        <!-- Imperial height -->
+        <div class="field-group" id="group-imperial-height">
+          <label>Height</label>
+          <div class="split-inputs">
+            <div class="input-wrap">
+              <input type="number" id="feet" placeholder="0" min="1" max="9" step="1"
+                     aria-label="Feet" oninput="clearErrors()" />
+              <span class="input-unit">ft</span>
+            </div>
+            <div class="input-wrap">
+              <input type="number" id="inches-part" placeholder="0" min="0" max="11" step="0.5"
+                     aria-label="Inches" oninput="clearErrors()" />
+              <span class="input-unit">in</span>
+            </div>
+          </div>
+          <span class="field-error" id="err-height" aria-live="polite"></span>
+        </div>
+
+        <!-- Metric height -->
+        <div class="field-group" id="group-metric-height" style="display:none">
+          <label for="height-cm">Height</label>
+          <div class="input-wrap">
+            <input type="number" id="height-cm" placeholder="0" min="50" max="280" step="0.5"
+                   aria-label="Height in centimetres" oninput="clearErrors()" />
+            <span class="input-unit">cm</span>
+          </div>
+          <span class="field-error" id="err-height-cm" aria-live="polite"></span>
+        </div>
+
+        <!-- Weight (shared) -->
+        <div class="field-group">
+          <label for="weight" id="weight-label">Weight</label>
+          <div class="input-wrap">
+            <input type="number" id="weight" placeholder="0" min="1" max="1000" step="0.5"
+                   aria-label="Weight" oninput="clearErrors()" />
+            <span class="input-unit" id="weight-unit-label">lbs</span>
+          </div>
+          <span class="field-error" id="err-weight" aria-live="polite"></span>
+        </div>
+
+      </div><!-- /.field-grid -->
+
+      <div class="btn-row">
+        <button class="btn-primary" onclick="calculate()">Calculate</button>
+        <button class="btn-ghost" onclick="clearForm()">Clear</button>
+      </div>
+
+      <!-- Result panel -->
+      <section class="result-panel" id="result-panel" aria-live="polite" aria-label="BMI result">
+        <div class="result-top">
+          <div>
+            <div class="result-label">Your BMI</div>
+            <div class="bmi-display" id="bmi-display">—</div>
+          </div>
+          <span class="category-badge" id="category-badge"></span>
+        </div>
+
+        <!-- Gauge -->
+        <div class="gauge-wrap" aria-hidden="true">
+          <div class="gauge-track">
+            <div class="gauge-needle" id="gauge-needle"></div>
+          </div>
+          <div class="gauge-labels">
+            <span>Underweight</span>
+            <span>Normal</span>
+            <span>Overweight</span>
+            <span>Obese</span>
+          </div>
+        </div>
+
+        <!-- Stats row -->
+        <div class="stats-row" id="stats-row"></div>
+
+        <p class="disclaimer">
+          BMI is a population-level screening tool and does not account for age, sex,
+          muscle mass, or bone density. Consult a qualified healthcare professional
+          for personalised assessment.
+        </p>
+      </section>
+
+    </main>
+  </div><!-- /.page-wrap -->
+
+  <script src="bmi.js"></script>
+</body>
+</html>
