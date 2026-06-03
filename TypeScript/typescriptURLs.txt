@@ -18,7 +18,6 @@ https://www.typescriptlang.org/play/
 
 VIDEOS:
 =======
-
 TypeScript In 5 Minutes: A VERY Brief Intro by Colt Steele
 https://www.youtube.com/watch?v=V78lbWLKMxo
 
@@ -30,4 +29,7 @@ https://www.freecodecamp.org/news/learn-typescript-in-1-hour/
 
 FreeCodeCamp Learn TypeScript – The Ultimate Beginners Guide
 https://www.freecodecamp.org/news/learn-typescript-beginners-guide/
+
+NetNinja TypeScript Video Series (21):
+https://www.youtube.com/playlist?list=PL4cUxeGkcC9gUgr39Q_yD6v-bSyMwKPUI
 

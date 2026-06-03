@@ -1,0 +1,1567 @@
+01- Intro
+=========
+"TypeScript is JavaScript with syntax for types. It is all about type safety. 
+Sometimes JavaScript exhibits unexpected behavior. For example, if you write:
+
+2 + "2"
+
+It will return '22'. However, with TypeScript, all of these problems just disappear.
+
+TypeScript is a programming language built on top of JavaScript. It enhances JavaScript 
+by offering several features that aid in creating more robust and maintainable 
+applications while reducing development time. The most significant feature TypeScript 
+provides is static typing.
+
+Static typing, a core concept in TypeScript, is what sets it apart. In programming, 
+we have two main categories: statically typed languages and dynamically typed languages.
+
+- **Statically Typed Languages** (e.g., C++, C#, Java) require declaring a variable's 
+type at compile time or during coding. For example, a variable can be declared as an 
+integer, and it can only store integer values. This fixed type prevents the variable 
+from holding a string or any other data type, making the code safer and less prone to 
+errors.
+
+- **Dynamically Typed Languages** (e.g., JavaScript, Python, Ruby) allow variables to 
+have dynamic types, determined at runtime and changeable during execution. While this 
+dynamic nature provides flexibility, it can lead to errors. For instance, changing a 
+variable from a number to a string later in the code may lead to unexpected behavior 
+or crashes.
+
+This is where TypeScript comes in. TypeScript is JavaScript with type checking. 
+It requires developers to explicitly specify variable types upon declaration, similar 
+to statically typed languages. The TypeScript compiler checks your code for type-related 
+errors at compile time, catching many issues before runtime. This helps you identify 
+and resolve errors early in the development process.
+
+02 - Setup
+==========
+## Setup
+
+1. **Install Git: from: https://git-scm.com/downloads
+
+2. **Install Visual Studio Code from: https://code.visualstudio.com/download)
+
+3. **Install Node.js: from: https://nodejs.org/ - Choose LTS/Long-Term Support version
+
+4. **Verify Node.js Installation:
+    - Open terminal or Git Bash. Run this command to check if Node.js is installed:
+        node -v
+    - It should display the Node.js version if it's installed correctly.
+	
+5. Install TypeScript: Use the Node Package Manager (npm) to install TypeScript globally.
+    - Open your terminal or Git Bash. Run the following command to install TypeScript:
+        npm install -g typescript
+    - After installation, verify TypeScript by running:
+        tsc -v
+    - It should display the TypeScript version if it's installed correctly.
+
+## **Create Your First Application**
+
+1. Create a new folder on your desktop, for example, named "typescript."
+
+2. Inside the "typescript" folder, create a new file called `index.ts`.
+
+3. Write the following code in `index.ts`:
+		console.log(Math.floor());
+
+1. VS Code highlights `Math.floor()` as if there's a problem even before compiling.
+
+2. If you hover over it, you will see the message "(expected 1 argument but got 0)."
+
+3. Fix the problem, add a number (e.g., 11.3) as an argument inside `Math.floor()`.
+
+## **Running the Code**
+1. Open the Git Bash navigate to the directory where you created your TypeScript file.
+		cd /desktop/typescript/
+
+**Compile TypeScript to JavaScript:**
+1. Use the `tsc` command to compile it into JavaScript. For example:
+		tsc
+
+This will generate a JavaScript file with the same name as your TypeScript file
+(`index.js`).
+
+**Run the JavaScript File:**
+1. Once compiled, you can run the resulting JavaScript file using Node.js. For example:
+		node filename.js
+
+This will execute your JavaScript code, and you should see the output in the terminal.
+
+## **Configuration**
+1. Let's begin by structuring the project:
+    - Create a `src` folder.
+    - Move the `index.ts` file into the newly created `src` folder.
+	
+2. **Generate a tsconfig.json File:**
+Create a `tsconfig.json` file with default settings using this command:
+		tsc --init
+
+    This command will generate a `tsconfig.json` file in your project directory, 
+	including default compiler options.
+    
+3. **Customize tsconfig.json (Optional):**
+Open `tsconfig.json` file in a text editor
+    - `"rootDir": "./src"` : Defines the root directory for TypeScript source files.
+    - `"outDir": "./dist"` : Specifies the output directory for compiled JavaScript files. (that folder and file are going to be generated)
+	
+4. **Save tsconfig.json:**
+	Save your changes to the `tsconfig.json` file if you made any customizations.
+	
+5. **Compile Your TypeScript Code:**
+After creating and configuring `tsconfig.json`, compile your TypeScript code by running:
+		tsc
+   TypeScript will utilize the settings defined in your `tsconfig.json` to 
+   compile your project.
+    
+6. **Run the Compiled JavaScript Code:**
+Once your TypeScript code is compiled to JavaScript, you can run the compiled 
+JavaScript file using Node.js. Use the following command
+		node dist/index.js
+
+03 - Types
+## built-in types - TypeScript Types
+
+JavaScript has built-in types e.g. number, string, boolean, null, undefined, objects.
+TypeScript introduces types like 'any,' 'unknown,' 'never,' 'enum,' and 'tuple'.
+
+## ****Type Annotations****
+
+In TypeScript, type annotations are used to explicitly specify the type of a variable, 
+function, or any other entity in your code. This helps the TypeScript compiler to 
+understand and enforce the types you intend to use in your program. 
+Type annotations are typically added using a colon (`:`) followed by the desired type.
+
+**Using Type Annotations with Variables:**
+
+let myNumberExOne: number = 42;
+let myStringExOne: string = "Hello, TypeScript";
+
+console.log("My Number Is:", myNumberExOne);
+console.log("My String Is:", myStringExOne);
+
+Another way to write this code is as follows:
+
+let myNumberExTwo: number;
+let myStringExTwo: string;
+
+myNumberExTwo = 42;
+myStringExTwo = "Hello, TypeScript";
+
+console.log("My Number Is:", myNumberExTwo);
+console.log("My String Is:", myStringExTwo);
+
+Using type annotations, ensures code is more robust, maintainable, and less error-prone, 
+making it easier to work on large projects and collaborate with other developers.
+
+## dynamic type determination
+
+If you choose not to use type annotations in TypeScript, the language can still infer
+the type dynamically based on your declaration. For instance:
+
+let greeting = "Hello, world!";
+console.log(greeting);
+
+Hee TypeScript will automatically infer the type of the variable `greeting` as a string. 
+However, while TypeScript can infer types, it's generally not recommended to rely solely 
+on dynamic type inference, as it may lead to unintended issues and reduced code clarity. 
+Explicitly defining types through type annotations is a best practice for writing 
+maintainable and error-free TypeScript code.
+
+## ****Any Type****
+
+The `any` type is a special type in TypeScript that can represent any type of value. 
+When a variable is assigned the `any` type, it essentially tells the TypeScript 
+compiler to disable type checking for that variable, allowing it to hold values of 
+any type.
+		let myVariable: any = 42;
+		myVariable = "Hello, TypeScript";
+		console.log(myVariable)
+
+However, it's generally advised to avoid using the `any` type whenever possible in 
+TypeScript for the following reasons:
+
+1. **Loss of Type Safety:**
+
+2. **Reduced Code Reliability:**
+
+3. **Maintenance Challenges:**
+
+4. **Interferes with Tooling:**
+
+04 - Objects
+## Type Annotations With Objects
+
+Type annotations with objects in TypeScript allow you to specify the types of 
+properties that an object should have.
+
+let personExOne: {
+  name: string;
+  age: number;
+  jobTitle?: string;
+  address: {
+    street: string;
+    city: string;
+  };
+};
+
+personExOne = {
+  name: "Alice",
+  age: 30,
+  jobTitle: "Engineer",
+  address: {
+    street: "123 Main St",
+    city: "Wonderland",
+  },
+};
+
+And there is yet another method
+
+// Define an object type with type annotations
+let personExTwo: {
+  name: string;
+  age: number;
+  jobTitle?: string;
+  address: {
+    street: string;
+    city: string;
+  };
+} = {
+  name: "Jeff",
+  age: 69,
+  jobTitle: "Retired",
+  address: {
+    street: "123 Main St",
+    city: "Someplace",
+  },
+};
+
+05 - Functions
+## Function
+
+Type annotations in TypeScript are used to explicitly specify the data types for 
+function parameters and return values. These annotations help both developers and 
+the TypeScript compiler understand and enforce the expected types of values that 
+functions should accept as arguments and return as results. Type annotations for 
+functions are typically added using colons (**`:`**) within the function's parameter 
+list and after the parameter list to denote the return type.
+
+Here's a simple example illustrating type annotations with functions:
+	function calculateRectangleArea(l: number, w: number): number {
+	  return l * w;
+	}
+
+	// Calling the function with valid arguments
+	const length = 5;
+	const width = 3;
+	const area = calculateRectangleArea(length, width);
+	console.log(`The area of the rectangle is: ${area}`);
+
+In this revised example:
+1. We define a function `calculateRectangleArea` that takes two parameters: 
+`lengthRectAngle` and `widthOfRectAngle` . We use type annotations to specify that 
+both parameters should be of type `number`. Additionally, we specify that the function 
+should return a value of type `number` by using `: number` after the parameter list.
+
+2. We calculate the area of a rectangle by multiplying the `lengthRectAngle` and 
+`widthOfRectAngle` parameters and returning the result.
+
+3. We call the `calculateRectangleArea` function with valid arguments, `lengthRectAngle` 
+and `widthOfRectAngle` , which are both numbers.
+
+4. We store the result of the function call in a variable named `area` and log the 
+calculated area to the console.
+
+## ****Optional And Default Parameter****
+
+In TypeScript, you can make function parameters optional or provide default values to 
+parameters, allowing for more flexible and convenient function usage. This feature is 
+especially useful when you have functions that can accept a varying number of arguments 
+or when you want to provide default values in case the caller does not supply a 
+particular argument.
+
+Let's break down optional and default parameters:
+
+1. **Optional Parameters:**
+    - An optional parameter is one that may or may not be provided when calling a function.
+    - To define an optional parameter, you use a `?` symbol after the parameter name in 
+	the function's parameter list.
+    - The TypeScript compiler allows you to call the function with or without providing a 
+	value for the optional parameter.
+    
+    Example:
+    function greetOptional(name: string, age?: number) {
+      if (age !== undefined) {
+        console.log(`Hello, ${name}! You are ${age} years old.`);
+      } else {
+        console.log(`Hello, ${name}!`);
+      }
+    }
+    
+    greetOptional("Alice"); // Output: "Hello, Alice!"
+    greetOptional("Bob", 30); // Output: "Hello, Bob! You are 30 years old."
+
+2. **Default Parameters:**
+    - A default parameter is a parameter that automatically takes a default value if no 
+	argument is provided during the function call.
+    - To set a default value for a parameter, you use the `=` operator in the parameter 
+	list.
+    
+    Example:
+    
+    // Default Parameters:
+    function greetDefault(name: string, age: number = 25) {
+      console.log(`Hello, ${name}! You are ${age} years old.`);
+    }
+    
+    greetDefault("Alice"); // Output: "Hello, Alice! You are 25 years old."
+    greetDefault("Bob", 30); // Output: "Hello, Bob! You are 30 years old."
+
+## ****Function Rest Parameter****
+
+In TypeScript, as well as in JavaScript, a rest parameter allows a function to 
+accept an indefinite number of arguments as an array. This means that you can pass 
+any number of arguments to the function, and they will be collected into an array, 
+which can be accessed within the function. Rest parameters are specified using the 
+spread operator **`...`** followed by the parameter name in the function's parameter list.
+
+// Function with a rest parameter and type annotations
+function addAll(...nums: number[]): number {
+  let result = 0;
+  for (let i = 0; i < nums.length; i++) {
+    result += nums[i];
+  }
+  return result;
+}
+
+// Calling the function with various numeric arguments
+console.log(addAll(10, 20, 30, 100, 10.5, +true)); // Output: 170.5
+console.log(addAll(10, 20, 30, +true)); // Output: 60
+
+In this code:
+- The `addAll` function is defined with a rest parameter `...nums`, which captures a 
+variable number of numeric arguments and stores them in an array named `nums`. The type
+annotation `number[]` specifies that the elements in the `nums` array should be of type 
+`number`.
+- Inside the function, a `for` loop is used to iterate through the `nums` array and 
+calculate the sum of all the numbers provided as arguments.
+
+pro tip 
+**`+true`** in JavaScript is a unary plus operator (**`+`**) applied to the boolean 
+**`true`**, resulting in the numeric value **`1`**.
+
+## Arrow Function
+
+An arrow function in TypeScript is a concise way to define functions using a more 
+compact syntax compared to traditional function expressions. Arrow functions are also 
+sometimes called "fat arrow" functions due to the use of the **`=>`** syntax. They were 
+introduced in ECMAScript 6 (ES6) and have since become a popular way to write functions 
+in JavaScript and TypeScript.
+
+const addWithArrow = (num1: number, num2: number): number => num1 + num2;
+console.log(addWithArrow(22, 55)); // Output: 77
+
+- The `addWithArrow` variable is assigned an arrow function that performs the same 
+addition operation.
+
+## Anonymous Function
+
+An anonymous function in TypeScript (and in JavaScript) is a function that doesn't 
+have a name. Instead of declaring a named function, you define the function directly 
+as an expression. Anonymous functions are often used in various scenarios, including 
+passing functions as arguments to other functions or creating functions on the fly. 
+They are particularly useful when you need a small, one-off function without polluting 
+the global scope with a function name.
+
+const add = function (num1: number, num2: number): number {
+  return num1 + num2;
+};
+console.log(add(11, 100)); // Output: 111
+
+- The `add` variable is assigned an anonymous function that adds two numbers, 
+`num1` and `num2`.
+
+## void & never
+
+In TypeScript, `void` and `never` are two distinct types that represent different 
+concepts:
+
+1. **`void` Type:**
+    - The `void` type is used to indicate the absence of a value. It represents functions 
+	that do not return any value or return `undefined`.
+    - It's often used to annotate functions that perform actions or side effects but 
+	don't produce a meaningful result that needs to be assigned or captured.
+    
+    Example:
+    
+    // void
+    function greet(name: string): void {
+      console.log(`Hello, ${name}!`);
+    }
+    
+    function noReturnValue(): void {
+      // This function doesn't return a value (implicitly returns undefined).
+    }
+    ```
+    
+    In the `greet` function, it logs a message but doesn't return anything, so its 
+	return type is `void`.
+    
+2. **`never` Type:**
+    - The `never` type is used to represent values that never occur. It's typically 
+	associated with functions that never return, either because they throw exceptions, 
+	enter infinite loops, or have unreachable code.
+    
+    Example:
+    
+    // never
+    function throwError(message: string): never {
+      throw new Error(message);
+    }
+    
+    function infiniteLoop(): never {
+      while (true) {
+        // This function never exits (infinite loop).
+      }
+    }
+
+07 - Arrays
+## Type Annotations With Arrays
+
+Type annotations with arrays allow you to specify the expected data types of the 
+array elements, ensuring type safety in your code.
+
+// Annotating an array of strings
+let fruits: string[] = ["apple", "banana", "cherry"];
+
+// Using a loop to process each element in the array
+for (let i = 0; i < fruits.length; i++) {
+  console.log(`Fruit: ${fruits[i].toUpperCase()}`);
+}
+
+1. We annotate the `fruits` array as an array of strings.
+
+2. We use a `for` loop to iterate over the `fruits` array and display each fruit 
+in uppercase letters.
+
+## Type Annotations With Multidimensional Arrays
+
+let arrayOne: number[] = [1, 2, 3, 4, 5];
+let arrayTwo: string[] = ["A", "B", "C"];
+let arrayThree: (string | number)[] = [1, 2, 3, 4, "A", "B", "C"];
+
+In this code:
+
+1. `arrayOne` is declared as an array of numbers, annotated with the type `number[]`. 
+This means it can only contain numeric values.
+
+2. `arrayTwo` is declared as an array of strings, annotated with the type `string[]`. 
+It should only contain string values.
+
+3. `arrayThree` is declared as an array that can hold elements of either type string 
+or number, annotated with `(string | number)[]`. This array allows for a mixture of 
+numeric and string values within the same array.
+
+08 - Tuples
+## Tuple
+
+A tuple is a data type in TypeScript that is similar to an array but has a fixed 
+number of elements, and you can specify the types of each element at specific 
+positions within the tuple. Here's an explanation based on the provided code:
+
+// Defining a tuple type
+let article: readonly [number, string, boolean] = [11, "Title One", true];
+
+// Assigning a new tuple value to the `article` variable
+article = [12, "Title Two", false];
+
+// Trying to push a new element into a tuple (will result in an error)
+// article.push(100);
+
+console.log(article);
+
+// Destructuring the tuple into individual variables
+const [id, title, published] = article;
+console.log(id);
+console.log(title);
+console.log(published);
+```
+
+- We define a tuple type for the `article` variable, specifying that it should have three 
+elements with specific types: a number, a string, and a boolean.
+- We assign a matching tuple value to `article`.
+- We demonstrate that you can reassign a new tuple value that matches the type structure.
+- We show that tuples are fixed in size and can't have additional elements added.
+- Lastly, we use destructuring to extract and display the individual elements of the 
+`article` tuple.
+
+09 - Enums
+## Enums
+
+Enums in TypeScript are a way to define a set of named constant values 
+representing discrete options or categories. They provide a convenient means to 
+work with descriptive values in a more readable and expressive way. In essence, 
+enums allow you to create a new data type composed of predefined, related values.
+
+Here's an example of how to define and use an enum in TypeScript:
+
+enum Days {
+  Sunday,
+  Monday,
+  Tuesday,
+  Wednesday,
+  Thursday,
+  Friday,
+  Saturday
+}
+
+const today: Days = Days.Wednesday;
+console.log(`Today is ${Days[today]}`);
+
+enum Months {
+  January = 1,
+  February,
+  March,
+  April,
+  May,
+  June,
+  July,
+  August,
+  September,
+  October,
+  November,
+  December
+}
+
+const currentMonth: Months = Days.June;
+console.log(`The Curent Month is ${Months[currentMonth]}`);
+
+
+In the first example:
+1. We create an enum called **`Days`** with a list of constant values, starting from 0 
+by default. Enums allow us to assign meaningful names to these values.
+
+2. We assign the value **`Days.Wednesday`** to the variable **`today`**.
+
+3. We use **`Days[today]`** to retrieve and display the name of the day associated 
+with the value in **`today`**.
+
+In the second example:
+1. We create an enum called **`Months`** with a list of constant values, starting from 1 
+by default. Enums allow us to assign meaningful names to these values.
+
+2. We assign the value **`Months.June`** to the variable **`currentMonth`**.
+
+3. We use **`Months[currentMonth]`** to retrieve and display the name of the month associated 
+with the value in **`currentMonth`**.
+
+Enums make code more readable by providing human-readable names for specific values, 
+and they are commonly used for categories like days of the week or status codes.
+
+10 - Interface
+## Interface
+
+An interface in TypeScript is a way to define a contract or blueprint for the shape 
+and structure of an object. It specifies the properties, methods, and their types that 
+objects implementing the interface should have. In essence, an interface defines a set 
+of rules that an object must follow to be considered valid according to that interface.
+
+1. **Shape Definition**: Interfaces specify object structure, including property names, 
+types, and optional/required status.
+
+2. **Contract**: Objects or classes adhering to an interface must implement its defined 
+structure and methods.
+
+3. **Type Checking**: TypeScript checks if objects meet the interface's requirements, 
+catching type errors early.
+
+4. **Code Clarity**: Interfaces document expected object properties and enhance code 
+readability, aiding object usage understanding.
+
+Here's a basic example of an interface definition:
+
+interface PersonEx1 {
+  name: string;
+  age: number;
+}
+
+const John: PersonEx1 = {
+  name: "John",
+  age: 30,
+};
+```
+
+In this example, we define an interface `PersonEx1` with two properties: `name` 
+(a `string`) and `age` (a `number`). We then create an object `alice` that adheres 
+to this interface.
+
+Interfaces are widely used in TypeScript for:
+
+- Defining the structure of data objects.
+- Specifying the shape of function parameters and return values.
+- Enforcing consistency in class definitions.
+- Facilitating code maintainability and collaboration.
+
+## **Interface Method And Parameters**
+
+In TypeScript, an interface can define not only the structure of an object but also 
+the signature of functions or methods that objects adhering to the interface should 
+have. This allows you to specify not just the properties but also the methods and 
+their parameters and return types that should be present in objects implementing the 
+interface.
+
+// Define an interface 'Person' with a method 'greet'
+interface PersonEx2 {
+  name: string;
+  age: number;
+  greet(message: string): void;
+}
+
+// Create an object that adheres to the 'Person' interface
+const Sarah: PersonEx2 = {
+  name: "Sarah",
+  age: 30,
+  greet(message: string) {
+    console.log(`${this.name} who is ${this.age} years old says: ${message}`);
+  },
+};
+
+Sarah.greet("Hello, TypeScript!"); // Output: Sarah who is 30 years old says: Hello, TypeScript!
+
+In this example:
+
+1. **Interface Declaration**: We define an interface named `PersonEx2` with three members:
+    - `name`: A property of type `string`.
+    - `age`: A property of type `number`.
+    - `greet`: A method that takes a parameter of type `string` and returns `void` 
+	(indicating that it doesn't return any value).
+	
+2. **Object Creation**: We create an object `alice` that adheres to the `PersonEx2` 
+interface. It has properties `name` and `age`, as well as a `greet` method that takes 
+a message and logs it to the console.
+
+3. **Method Invocation**: We call the `greet` method on the `alice` object, passing in 
+a message. The method uses the object's properties to construct a greeting message and 
+logs it to the console.
+
+## ReOpen The Interface And Use Cases
+
+interface reopening in TypeScript is a valuable technique for gradually building and 
+extending interfaces as your project grows, promoting modularity and code organization. 
+It enables you to create versatile, flexible, and consistent object structures.
+
+// Homepage Interface Declaration
+interface Settings {
+  readonly theme: boolean;
+  font: string;
+}
+
+// Articles Page Interface Reopening
+interface Settings {
+  sidebar: boolean;
+}
+
+// Contact Page Interface Reopening
+interface Settings {
+  external: boolean;
+}
+
+// Create an object 'userSettings' that adheres to the merged 'Settings' interface
+let userSettings: Settings = {
+  theme: true,
+  font: "Open Sans",
+  sidebar: false,
+  external: true
+};
+
+1. **Interface Declaration**: We start by defining an initial interface called `Settings` 
+for the Homepage, which includes properties like `theme` and `font`. The `theme` property 
+is read-only.
+
+2. **Interface Reopening - Articles Page**: We reopen the `Settings` interface to add a 
+`sidebar` property specific to the Articles Page. This demonstrates how interfaces can be 
+extended as different parts of the application require additional properties.
+
+3. **Interface Reopening - Contact Page**: The `Settings` interface is reopened again, 
+this time for the Contact Page, where an `external` property is introduced, tailored to 
+that section.
+
+4. **Object Creation**: We create an object named `userSettings` that complies with the 
+merged `Settings` interface, including properties from all the interface declarations: 
+`theme`, `font`, `sidebar`, and `external`. This object represents user settings, 
+incorporating attributes from different parts of a website.
+
+**Use Cases**:
+
+- **Modular Development**: Interface reopening enables modular development, allowing 
+different parts of a project to contribute to interface definitions. Each section focuses 
+on its specific properties, promoting code organization.
+
+- **Progressive Enhancement**: As your application evolves, you can extend interfaces to 
+accommodate new features or settings. This incremental approach ensures backward 
+compatibility and code flexibility.
+
+- **Clear Separation of Concerns**: Interface reopening maintains a clear separation of 
+concerns between different sections or modules of your application while ensuring consistent 
+data structures.
+
+## built-in interface
+
+In TypeScript, a built-in interface refers to an interface that is predefined and 
+provided by the TypeScript language or the underlying JavaScript runtime environment. 
+These interfaces define the shape and behavior of objects or values for specific use 
+cases and are used to ensure type safety and compatibility in TypeScript code.
+
+Examples of built-in interfaces in TypeScript include:
+
+1. **HTMLElement Interfaces:** TypeScript provides built-in interfaces for HTML elements, 
+such as `HTMLElement`, `HTMLDivElement`, `HTMLAnchorElement`, etc. These interfaces 
+define the properties and methods available for working with elements in the Document 
+Object Model (DOM).
+
+## `HTMLImageElement`
+
+In TypeScript, `HTMLImageElement` is a built-in interface that represents an HTML 
+`<img>` element. This interface extends the `HTMLElement` interface and provides 
+additional properties and methods specifically related to images.
+
+Here are some of the properties and methods you can access when working with an 
+`HTMLImageElement`:
+
+- Properties:
+    - `alt`: A string representing the alternate text for the image.
+    - `height`: The height of the image in pixels.
+    - `src`: The source URL of the image.
+    - `width`: The width of the image in pixels.
+	
+- Methods:
+    - `complete`: A boolean value indicating whether the image has finished loading.
+    - `decode(): Promise<void>`: A method that returns a promise and resolves once the 
+	image is decoded.
+    - `naturalHeight`: The intrinsic height of the image in pixels.
+    - `naturalWidth`: The intrinsic width of the image in pixels.
+
+By using the `HTMLImageElement` interface in TypeScript, you can access and manipulate 
+properties and methods related to `<img>` elements in a type-safe manner when working 
+with the Document Object Model (DOM) in web applications. This helps catch potential 
+errors and provides better code assistance in modern code editors.
+
+Example of using `HTMLImageElement` in TypeScript:
+
+const imgElement: HTMLImageElement = document.createElement("img");
+imgElement.src = "image.jpg";
+imgElement.alt = "My Image";
+
+if (imgElement.complete) {
+    console.log(`Image dimensions: ${imgElement.naturalWidth}x${imgElement.naturalHeight}`);
+} else {
+    imgElement.addEventListener("load", () => {
+        console.log(`Image dimensions: ${imgElement.naturalWidth}x${imgElement.naturalHeight}`);
+    });
+}
+
+In this example, we create an `HTMLImageElement`, set its properties, and work with
+some of its methods in a TypeScript context.
+
+## **Interface vs. Type Aliases**
+
+In TypeScript, both interfaces and type aliases serve similar purposes: defining custom 
+data structures and types. However, they have some differences in terms of usage and 
+capabilities. Here's a comparison between interfaces and type aliases:
+
+**1. Declaration Syntax:**
+
+- **Interface:** Declared using the `interface` keyword.
+
+interface PersonExInterface {
+  name: string;
+  age: number;
+}
+
+- **Type Alias:** Declared using the `type` keyword.
+
+type PersonExType = {
+  name: string;
+  age: number;
+};interface AnimalExInterface {
+  type: string;
+}
+
+interface Dog extends AnimalExInterface {
+  bark(): void;
+}
+
+class Labrador implements Dog {
+  type: string = "dog";
+  bark() {
+    console.log("Woof!");
+  }
+}
+
+**2. Extending and Implementing:**
+
+- **Interface:** Can be extended by other interfaces using the `extends` keyword and 
+implemented by classes using the `implements` keyword.
+
+interface Animal {
+  type: string;
+}
+
+interface Dog extends Animal {
+  bark(): void;
+}
+
+class Labrador implements Dog {
+  type: "dog";
+  bark() {
+    console.log("Woof!");
+  }
+}
+
+- **Type Alias:** Cannot be extended or implemented directly. However, you can achieve 
+similar results using intersection types.
+
+type AnimalExType = {
+  type: string;
+};
+
+type Monkey = AnimalExType & {
+  bark(): void;
+};
+
+const labrador: Monkey = {
+  type: "monkey",
+  bark() {
+    console.log("Woof!");
+  },
+};
+
+**3. Compatibility:**
+
+- **Interface:** Supports declaration merging. When you declare multiple interfaces 
+with the same name, TypeScript will merge them into a single interface.
+
+interface Car {
+  brand: string;
+}
+
+interface Car {
+  model: string;
+}
+
+const myCar: Car = {
+  brand: "Toyota",
+  model: "Camry",
+};
+```
+
+- **Type Alias:** Does not support declaration merging. If you declare multiple type 
+aliases with the same name, you'll get an error.
+
+**4. Extensibility:**
+
+- **Interface:** Use when you need to define the shape of objects and also when you 
+need to implement them in classes. They are more suitable for defining contracts that 
+classes must adhere to.
+
+- **Type Alias:** Use when you want to create custom types that can be combined using 
+union types, intersection types, or when defining complex types.
+
+**5. Readability and Style:**
+
+- **Interface:** Preferred when defining shapes of objects, especially for public APIs, 
+as they convey the intent clearly. They also work well with code editors' IntelliSense 
+for auto-completion and documentation generation.
+
+- **Type Alias:** Useful for defining unions, intersections, and more complex types. 
+They are often used to give descriptive names to specific combinations of types.
+
+In most cases, the choice between interfaces and type aliases depends on your specific 
+use case and coding style. Both are valuable tools in TypeScript for defining custom 
+types and enhancing code readability and maintainability.
+
+11 - Classes
+## Class Type Annotations
+
+In TypeScript, class type annotations are used to specify the types of properties, 
+methods, and constructor parameters within a class. They define the expected data 
+types and enable TypeScript to perform type checking to ensure that class instances 
+adhere to the defined structure. Class type annotations help catch type-related errors 
+at compile time, improving code reliability. Here's an explanation of class type 
+annotations:
+
+class Product {
+  // Property type annotations
+  id: number;
+  name: string;
+  price: number;
+
+  constructor(id: number, name: string, price: number) {
+    // Constructor parameter type annotations
+    this.id = id;
+    this.name = name;
+    this.price = price;
+  }
+
+  // Method type annotations
+  getProductInfo(): string {
+    return `ID: ${this.id}, Name: ${this.name}, Price: $${this.price}`;
+  }
+}
+
+// Create an instance of the Product class
+const product1 = new Product(1, "Widget", 20.0);
+
+// Access class properties and call a method
+console.log(product1.getProductInfo()); // Output: ID: 1, Name: Widget, Price: $20
+```
+
+In this example:
+
+- Class `Product` defines properties `id`, `name`, and `price`, each with type annotations 
+specifying their expected data types.
+- The constructor of the `Product` class takes three parameters (`id`, `name`, and `price`),
+ and their types are annotated.
+- The `getProductInfo` method is defined with a return type annotation (`string`) to 
+specify the expected return type.
+- An instance `product1` of the `Product` class is created and initialized with data.
+- The `getProductInfo` method is called on `product1`, and the result is logged to the 
+console.
+
+## class access modifiers:
+
+In TypeScript, class access modifiers are keywords used to control the visibility and 
+accessibility of class members (properties and methods) from outside the class. There 
+are three main access modifiers:
+
+1. `public`: Members declared as `public` are accessible from anywhere, both within and 
+outside the class. This is the default modifier if you don't explicitly specify one.
+
+Example:
+
+class MyClassPublic {
+    public name: string;
+
+    constructor(name: string) {
+        this.name = name;
+    }
+}
+
+const instancePublic = new MyClassPublic("John");
+console.log(instancePublic.name); // Accessing the public property
+```
+
+1. `private`: Members declared as `private` are only accessible from within the class 
+they are defined in. You cannot access private members from outside the class.
+
+Example:
+
+```tsx
+class MyClassPrivate {
+    private secret: string;
+
+    constructor(secret: string) {
+        this.secret = secret;
+    }
+
+    revealSecret() {
+        console.log(this.secret); // Accessing the private property from within the class
+    }
+}
+
+const instancePrivate = new MyClassPrivate("My secret");
+// console.log(instance.secret); // This would result in an error because secret is private
+instancePrivate.revealSecret(); // This is a valid way to access the private property
+```
+
+1. `protected`: Members declared as `protected` are accessible from within the class 
+they are defined in and from subclasses (derived classes). You cannot access protected 
+members from outside the class or unrelated classes.
+
+Example:
+class Parent {
+    protected familyName: string;
+
+    constructor(name: string) {
+        this.familyName = name;
+    }
+}
+
+class Child extends Parent {
+    introduceFamily() {
+        console.log(`Our family name is ${this.familyName}`);
+    }
+}
+
+const parent = new Parent("Smith");
+const child = new Child("Johnson");
+
+// console.log(parent.familyName); // This would result in an error because familyName is protected
+child.introduceFamily(); // This is a valid way to access the protected property
+
+These access modifiers help you encapsulate the internal details of a class and provide 
+a level of control over how class members are accessed and manipulated. They are essential
+for maintaining the integrity and security of your code in larger applications.
+
+## Class accessors
+
+Class accessors, also known as getters and setters, are a way to control access to the 
+properties of a class. They allow you to get and set the values of class properties 
+while providing additional control and logic if needed. Accessors are defined using the 
+**`get`** and **`set`** keywords.
+
+class ProductExAccessors {
+    // 'private' property
+    private _price: number;
+  
+    constructor(private id: number, private name: string) {
+      this._price = 0; // Default price
+    }
+  
+    // 'public' getter for price
+    get price(): number {
+      return this._price;
+    }
+  
+    // 'public' setter for price
+    set price(newPrice: number) {
+      if (newPrice >= 0) {
+        this._price = newPrice;
+      } else {
+        console.log("Price cannot be negative.");
+      }
+    }
+  
+    getProductInfo(): string {
+      return `ID: ${this.id}, Name: ${this.name}, Price: $${this._price}`;
+    }
+  }
+  
+  // Create an instance of the ProductExAccessors class
+  const productEx = new ProductExAccessors(1, "Widget");
+  
+  console.log(productEx.getProductInfo()); // Default price: ID: 1, Name: Widget, Price: $0
+  
+  // Use the 'setter' to update the price
+  productEx.price = 20.0;
+  
+  console.log(productEx.getProductInfo()); // Updated price: ID: 1, Name: Widget, Price: $20
+  
+  // Attempting to set a negative price triggers the setter logic
+  productEx.price = -5; // Price cannot be negative.
+
+In this example:
+
+- We've added a `private` property `_price` to the `ProductExAccessors` class, which 
+stores the product's price.
+- Accessors (`get` and `set`) for the `price` property provide controlled access to 
+`_price`. The `get` method retrieves the price, and the `set` method allows setting it 
+while enforcing a non-negative constraint.
+- When the `price` property is set to a negative value, a message is logged to indicate 
+that it's not allowed.
+- The `getProductInfo` method still uses `_price` to display the product's price.
+- We demonstrate using the setter to update the price and handle a case where an 
+invalid (negative) price is attempted to be set.
+
+## class static members
+
+Static members in a class are properties or methods that belong to the class itself, 
+rather than to instances of the class. This means you can access them without creating 
+an instance of the class. They are defined using the **`static`** keyword in TypeScript. 
+In this case, the static member `nextId` is used to manage unique IDs for all instances 
+of the `ProductStaticMembers` class.
+
+class ProductStaticMembers {
+    // 'private' property
+    private static nextId: number = 1;
+  
+    constructor(private id: number, private name: string) {}
+  
+    static generateNextId(): number {
+      return ProductStaticMembers.nextId++;
+    }
+  
+    getProductInfo(): string {
+      return `ID: ${this.id}, Name: ${this.name}`;
+    }
+  }
+  
+  // Generate unique IDs for products using the static method
+  const product1static = new ProductStaticMembers(ProductStaticMembers.generateNextId(), "Widget");
+  const product2static = new ProductStaticMembers(ProductStaticMembers.generateNextId(), "Gadget");
+  
+  console.log(product1static.getProductInfo()); // ID: 1, Name: Widget
+  console.log(product2static.getProductInfo()); // ID: 2, Name: Gadget
+```
+
+In this example:
+
+- We've added a `private static` property `nextId` to the `Product` class. This property 
+keeps track of the next available ID for products.
+- The `generateNextId` static method allows us to obtain the next ID in a controlled 
+manner and increments `nextId` for the next call.
+- When creating instances of the `ProductStaticMembers` class, we use the static method 
+`ProductStaticMembers.generateNextId()` to generate unique IDs for each product.
+- Each product instance retains its unique ID and other properties.
+
+---
+
+## class implement interface
+
+the class ensures that it provides the properties and methods required by that interface.
+It helps enforce a consistent structure for objects created from that class.
+
+class ProductImplementInterface {
+    // 'private' property
+    private static nextId: number = 1;
+  
+    constructor(private id: number, private name: string) {}
+  
+    static generateNextId(): number {
+      return ProductImplementInterface.nextId++;
+    }
+  
+    getProductInfo(): string {
+      return `ID: ${this.id}, Name: ${this.name}`;
+    }
+  }
+  
+  // Generate unique IDs for products using the static method
+  const product1implement = new ProductImplementInterface(ProductImplementInterface.generateNextId(), "Widget");
+  const product2implement = new ProductImplementInterface(ProductImplementInterface.generateNextId(), "Gadget");
+  
+  console.log(product1implement.getProductInfo()); // ID: 1, Name: Widget
+  console.log(product2implement.getProductInfo()); // ID: 2, Name: Gadget
+```
+
+In this example:
+
+- We have an interface `ProductImplementInterface` that defines the structure of a 
+product with properties `id` and `name`, as well as a method `getProductInfo`.
+- The `Product` class implements the `ProductImplementInterface` interface using the 
+`implements` keyword. It provides the required properties (`id` and `name`) and the 
+method `getProductInfo`.
+- Instances of the `Product` class, `product1` and `product2`, are created and 
+assigned to variables of type `ProductImplementInterface` . This demonstrates that 
+the class conforms to the interface.
+
+## abstract classes and members
+
+Abstract classes are used as blueprints for other classes. They cannot be instantiated 
+on their own but can be subclassed by other classes. Abstract classes can also contain 
+abstract methods, which are declared but not implemented in the abstract class itself. 
+Subclasses are required to provide implementations for these abstract methods.
+
+abstract class AbstractItem {
+  private static nextId: number = 1;
+
+  constructor(public id: number, protected name: string) {}
+
+  static generateNextId(): number {
+    return AbstractItem.nextId++;
+  }
+
+  abstract getItemInfo(): string;
+}
+
+class Item extends AbstractItem {
+  constructor(id: number, name: string) {
+    super(id, name);
+  }
+
+  getItemInfo(): string {
+    return `ID: ${this.id}, Name: ${this.name}`;
+  }
+}
+
+const item1: AbstractItem = new Item(AbstractItem.generateNextId(), "Widget");
+const item2: AbstractItem = new Item(AbstractItem.generateNextId(), "Gadget");
+
+console.log(item1.getItemInfo()); // ID: 1, Name: Widget
+console.log(item2.getItemInfo()); // ID: 2, Name: Gadget
+```
+
+Here's a shorter explanation of the code:
+
+1. `AbstractItem` is an abstract class serving as a blueprint for items. It includes:
+    - A private static property, `nextId`, for generating unique IDs.
+    - A constructor initializing `id` and `name`.
+    - A static method, `generateNextId()`, for obtaining the next ID.
+    - An abstract method, `getItemInfo()`, that must be implemented by subclasses.
+	
+2. `Item` is a concrete class extending `AbstractItem`. It provides a concrete 
+implementation of `getItemInfo()`.
+
+3. Two `Item` instances, `item1` and `item2`, are created with unique IDs and names.
+
+4. The `getItemInfo()` method of each item is called, displaying their information.
+
+## **Polymorphism & Method Override**
+
+This code example demonstrates the concept of polymorphism and method override in 
+TypeScript, which is commonly used in object-oriented programming. It defines abstract 
+classes and concrete subclasses to illustrate these concepts.
+
+// Define an abstract class
+abstract class AbstractEntity {
+  private static nextId: number = 1;
+  protected constructor(public id: number, protected name: string) {} // Change 'private' to 'protected'
+  static generateNextId(): number {
+    return AbstractEntity.nextId++;
+  }
+  abstract getEntityInfo(): string;
+}
+
+// Create a concrete subclass
+class Entity extends AbstractEntity {
+  constructor(id: number, name: string) {
+    super(id, name);
+  }
+  getEntityInfo(): string {
+    return `ID: ${this.id}, Name: ${this.name}`;
+  }
+}
+
+// Create another concrete subclass
+class AnotherEntity extends AbstractEntity {
+  constructor(id: number, name: string) {
+    super(id, name);
+  }
+  getEntityInfo(): string {
+    return `ID: ${this.id}, Name: ${this.name}, Additional Info: ...`;
+  }
+}
+
+// Generate unique IDs for entities using the static method
+const entity1: AbstractEntity = new Entity(AbstractEntity.generateNextId(), "Widget");
+const entity2: AbstractEntity = new AnotherEntity(AbstractEntity.generateNextId(), "Gadget");
+
+// Polymorphism: Call 'getEntityInfo' method on different concrete subclasses
+console.log(entity1.getEntityInfo()); // ID: 1, Name: Widget
+console.log(entity2.getEntityInfo()); // ID: 2, Name: Gadget, Additional Info: ...
+```
+
+In this example:
+
+1. **Abstract Class (`AbstractEntity`)**:
+    - Defines an abstract class named **`AbstractEntity`**, which serves as a 
+	blueprint for other classes.
+    - Features a private static property **`nextId`** to generate unique entity IDs.
+    - The constructor now uses **`protected`** instead of **`private`** for the 
+	**`name`** property to allow access in derived classes.
+	
+2. **Concrete Subclasses (`Entity` and `AnotherEntity`)**:
+    - Two concrete subclasses extend **`AbstractEntity`**: **`Entity`** and 
+	**`AnotherEntity`**.
+    - Each class has its constructor, passing **`id`** and **`name`** to the parent 
+	class's constructor via **`super(id, name)`**.
+    - They override the **`getEntityInfo`** method to provide custom entity information.
+	
+3. **Usage of Subclasses**:
+    - Instances of **`Entity`** and **`AnotherEntity** are created and stored in 
+	variables of the abstract class type (**`AbstractEntity`**).
+    - The **`generateNextId`** method from the abstract class generates unique IDs.
+    - Polymorphism is demonstrated as the overridden **`getEntityInfo`** methods are 
+	called on these instances, even though they have an abstract class type.
+	
+4. **Console Output**:
+    - The **`getEntityInfo`** method is called on both instances, and the results are 
+	logged, showing different information based on the subclass's implementation.
+
+This code illustrates polymorphism and method overriding in TypeScript. It enables 
+the creation of various entity types while adhering to a common interface provided 
+by the abstract class, showcasing the power of object-oriented programming and 
+inheritance.
+
+12 - Generics
+## Generics
+
+Generics in TypeScript are a feature that allows you to write reusable code by passing 
+a type as a parameter to another type, whether it's a class, interface, or function. 
+This means that you don't always have to specify the type explicitly when writing code, 
+as you can use Generics to work flexibly with various types without resorting to using 
+": any."
+
+The main advantages of using Generics include:
+
+1. Code Reusability: You can use the same code with different types without rewriting it.
+
+2. Enhanced Safety: Generics help detect potential errors at compile time rather than 
+runtime.
+
+3. Dealing with Multiple Types: Generics allow you to work with a variety of types 
+without specifying a particular type.
+
+Generics can be used in TypeScript to create:
+
+- Generic Classes.
+- Generic Functions.
+- Generic Interfaces.
+- Generic Methods.
+
+// A generic function that returns the input value as is
+function returnType<T>(val: T): T {
+  return val;
+}
+
+// Usage of the generic function with different types
+const numValue: number = returnType<number>(100);
+const strValue: string = returnType<string>("Elzero");
+const boolValue: boolean = returnType<boolean>(true);
+const arrValue: number[] = returnType<number[]>([1, 2, 3, 4]);
+
+console.log(`Number Value: ${numValue}`);
+console.log(`String Value: ${strValue}`);
+console.log(`Boolean Value: ${boolValue}`);
+console.log(`Array Value: ${arrValue}`);
+```
+
+In this example:
+
+- We define a generic function `returnType<T>` that takes a value of type `T` and 
+returns the same value of type `T`.
+- We demonstrate using the `returnType` function with various types, including numbers, 
+strings, booleans, and arrays.
+- We specify the type parameter `T` when calling the `returnType` function, allowing 
+TypeScript to infer the correct types for the returned values.
+- The function provides type safety, ensuring that the returned value has the same type 
+as the input value.
+
+## **Generics Multiple Types**
+
+Generics in TypeScript can handle multiple types using union types or intersection 
+types, allowing you to create flexible and versatile code that works with a variety 
+of data types. Let's break down these two approaches:
+
+// Generic Function `returnTypeEx`
+function returnTypeEx<T>(val: T): T {
+    return val;
+  }
+  
+  console.log(returnTypeEx<number>(100)); // Returns: 100 (number)
+  console.log(returnTypeEx<string>("Elzero")); // Returns: "Elzero" (string)
+  
+  // Arrow Function with Generics `returnTypeArrowSyntax`
+  const returnTypeArrowSyntax = <T>(val: T): T => val;
+  
+  console.log(returnTypeArrowSyntax<number>(100)); // Returns: 100 (number)
+  console.log(returnTypeArrowSyntax<string>("Elzero")); // Returns: "Elzero" (string)
+  
+  // Generic Function `testType`
+  function testType<T>(val: T): string {
+    return `The Value Is ${val} And Type Is ${typeof val}`;
+  }
+  
+  console.log(testType<number>(100));
+  // Returns: "The Value Is 100 And Type Is number"
+  
+  console.log(testType<string>("Elzero"));
+  // Returns: "The Value Is Elzero And Type Is string"
+  
+  // Generic Function `multipleTypes`
+  function multipleTypes<T, S>(valueOne: T, valueTwo: S): string {
+    return `The First Value Is ${valueOne} And Second Value ${valueTwo}`;
+  }
+  
+  console.log(multipleTypes<string, number>("Osama", 100));
+  // Returns: "The First Value Is Osama And Second Value 100"
+  
+  console.log(multipleTypes<string, boolean>("Elzero", true));
+  // Returns: "The First Value Is Elzero And Second Value true"
+```
+
+In this code:
+
+- The `returnTypeEx` function and the `returnTypeArrowSyntax` arrow function are 
+generic functions that return the input value as is. They accept a type parameter 
+`<T>` and return a value of type `T`. We demonstrate their usage with numbers and 
+strings.
+- The `testType` function is a generic function that takes a value and returns a 
+string describing the value and its type using the `typeof` operator.
+- The `multipleTypes` function is a generic function that accepts two values of 
+potentially different types `T` and `S` and returns a string combining both values.
+
+Each function demonstrates how generics can be used with different data types 
+while maintaining type safety.
+
+## **Generics Classes**
+
+Generics in classes allow you to create flexible and reusable class structures that 
+can work with a variety of data types, enhancing code flexibility and type safety.
+
+In this example, we'll explore generics in classes using the `User` class as an example:
+
+// Generic Class `User`
+class User<T = string> {
+  constructor(public value: T) {}
+
+  // Method that takes a message of type `T` and displays it along with the `value` property
+  show(msg: T): void {
+    console.log(`${msg} - ${this.value}`);
+  }
+}
+
+// Creating an instance of `User` with a specific type parameter (string)
+let userOne = new User<string>("Elzero");
+console.log(userOne.value); // Outputs: "Elzero"
+userOne.show("Message"); // Outputs: "Message - Elzero"
+
+// Creating an instance of `User` with a type parameter that can be a number or a string
+let userTwo = new User<number | string>(100);
+console.log(userTwo.value); // Outputs: 100
+userTwo.show("Message"); // Outputs: "Message - 100"
+
+```
+
+In this example:
+
+- We define a generic class `User<T = string>`, which allows us to create instances of
+the `User` class with different data types. The class takes a type parameter `T`, and 
+by default, it is set to `string` if no type is provided.
+- The constructor of the `User` class accepts an initial `value` of type `T`.
+- The `show` method of the `User` class takes a message of type `T` and displays it 
+along with the `value` property. This method demonstrates how a generic class can work 
+with the type specified by the type parameter `T`.
+- We create two instances of the `User` class: `userOne` with the type parameter 
+explicitly set to `string`, and `userTwo` with the type parameter set to 
+`number | string`. This showcases how the same class can be used with different data 
+types while preserving type safety.
+
+## ****Generics And Interfaces****
+
+Generics in classes and interfaces allow us to create reusable and type-safe data 
+structures that can work with different types, enhancing code flexibility and 
+maintainability. In this example, we've demonstrated how the `Collection` class can 
+be used with different item types while ensuring type safety.
+
+In this example, we'll explore the use of generics in classes and interfaces to 
+create a flexible `Collection` class:
+
+// Interface definitions for Book and Game
+interface Book {
+  itemType: string;
+  title: string;
+  isbn: number;
+}
+
+interface Game {
+  itemType: string;
+  title: string;
+  style: string;
+  price: number;
+}
+
+// Generic Class `Collection`
+class Collection<T> {
+  public data: T[] = [];
+
+  // Method to add an item of type `T` to the collection
+  add(item: T): void {
+    this.data.push(item);
+  }
+}
+
+// Creating an instance of `Collection` with type parameter `Book`
+let itemOne = new Collection<Book>();
+itemOne.add({ itemType: "Book", title: "Atomic Habits", isbn: 150510 });
+itemOne.add({ itemType: "Book", title: "Follow Your Heart", isbn: 650650 });
+console.log(itemOne);
+
+// Creating an instance of `Collection` with type parameter `Game`
+let itemTwo = new Collection<Game>();
+itemTwo.add({ itemType: "Game", title: "Uncharted", style: "Action", price: 150 });
+console.log(itemTwo);
+
+```
+
+In this code:
+
+- We define two interfaces, `Book` and `Game`, each representing a different type of 
+item with specific properties.
+- We create a generic class `Collection<T>` that allows us to create collections of 
+items of type `T`. The `data` property is an array of items, and the `add` method 
+allows us to add items of type `T` to the collection.
+- We create two instances of the `Collection` class:
+    - `itemOne` is an instance with the type parameter set to `Book`, so it can only 
+	store objects that conform to the `Book` interface.
+    - `itemTwo` is an instance with the type parameter set to `Game`, so it can only 
+	store objects that conform to the `Game` interface.
+    - We use the `add` method to add items of the specified types to the collections.
+
+13 - Type Assertions
+## Type Assertions
+
+Type assertions in TypeScript are a way to explicitly inform the TypeScript compiler 
+about the expected type of a value, even when the compiler cannot determine it with 
+certainty. They are useful when you, as a developer, have more knowledge about the 
+data types than TypeScript can infer, especially in scenarios where you're working 
+with non-TypeScript code or dynamically retrieved data.
+
+Here's an explanation of the provided example:
+
+let data: any = 1000;
+
+// Type assertion to treat "data" as a string
+console.log((data as string).repeat(3));
+
+Explanation:
+
+1. We then have a variable `data` of type `any`, which allows it to hold values of any 
+type. We attempt to perform a type assertion `(data as string)` to treat `data` as a 
+string. In this case, we're telling TypeScript to trust that `data` is a string, even 
+though it's initially assigned a numeric value.
+
+2. Finally, we use the `repeat` method on `(data as string)` to repeat the string three 
+times and log the result. Note that this is an example of using type assertion to handle 
+dynamic data when the type is uncertain, but it should be used with caution to ensure 
+that the data matches the asserted type at runtime.
+
+14 - Debugging
+## debugging
+
+Alright, let's dive into debugging TypeScript applications in VS Code. This skill is 
+invaluable when troubleshooting issues and making sure our code behaves as expected. 
+We'll break it down into a few steps:
+
+**Step 1:** First, navigate to your `tsconfig.json` file. In the `emit` section, 
+enable the "source map" feature. A source map is a file that helps map each line of 
+TypeScript code to its corresponding JavaScript code. This is primarily for debuggers 
+and not meant for human understanding.
+
+**Step 2:** After enabling source maps, recompile your code. You'll notice a new file 
+in your folder, named `index.js.map`. This is your source map file.
+
+**Step 3:** Let's make debugging more interactive. Open `index.ts` and add some logic. 
+For instance, you can insert a breakpoint by clicking on the line number. Breakpoints 
+pause code execution when reached.
+
+**Step 4:** Access the debug panel and create a `launch.json` file. From the dropdown, 
+select `node.js`. This file configures VS Code for debugging. It specifies that we'll 
+use Node.js to run and debug our program.
+
+**Step 5:** Add a `pre-launch task` setting in `launch.json`. Set it to 
+`"tsc build - tsconfig.json"`. Pay attention to the spaces; they're crucial. This 
+tells VS Code to use the TypeScript compiler to build your application using the 
+specified configuration.
+
+**Step 6:** Now, go back to `index.ts`. To start debugging, open the debug panel 
+and click on "Launch Program" or use the shortcut `F5`.
+
+**Step 7:** Your program starts, and execution halts at the breakpoint. In the debug 
+panel, you have various tools:
+
+- **Step Over (F10):** Execute one line of code.
+- **Step Into:** Useful for functions.
+- **Step Out:** Useful for leaving functions.
+- **Restart:** Restart the debugging session.
+- **Stop:** Terminate debugging.
+
+**Step 8:** On the left, under "Variables," you can see detected variables. As you 
+step through the code, watch these values change. If you don't see a variable, you 
+can add it to the "Watch" window.
+**Step 9:** As an example, add a `console.log` statement to see its effect during 
+debugging. Start the debugging session with `F5`, and use `F10` to step through lines.
+
+Debugging in VS Code is a powerful tool to pinpoint issues and understand your code's 
+behavior step by step.
+
+Once you're done debugging, simply stop the debugging session.

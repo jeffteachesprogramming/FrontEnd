@@ -1,0 +1,145 @@
+*
+{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body
+{
+    background-color: #f0f0f0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.calculator
+{
+    background-color: #d4d4d4;
+    border-radius: 12px;
+    padding: 16px;
+    width: 280px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.display
+{
+    background-color: #fff;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-bottom: 12px;
+    min-height: 72px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.expression
+{
+    font-size: 13px;
+    color: #888;
+    min-height: 16px;
+    text-align: right;
+}
+
+.result
+{
+    font-size: 36px;
+    color: #111;
+    text-align: right;
+    word-break: break-all;
+}
+
+.keypad
+{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.btn
+{
+    height: 58px;
+    border: none;
+    border-radius: 6px;
+    font-size: 18px;
+    font-family: Arial, Helvetica, sans-serif;
+    cursor: pointer;
+    background: #e8e8e8;
+    color: #111;
+    transition: background 0.1s;
+}
+
+.btn:hover
+{
+    background-color: #d0d0d0;
+}
+
+.btn:active
+{
+    background-color: #b8b8b8;
+}
+
+.btnUtility
+{
+    background-color: #c8c8c8;
+    font-size: 16px;
+}
+
+.btnUtility:hover
+{
+    background-color: #b4b4b4;
+}
+
+.btnUtility:active
+{
+    background-color: #a0a0a0;
+}
+
+.btnOperation
+{
+    background-color: #888;
+    color: #fff;
+}
+
+.btnOperation:hover
+{
+    background-color: #777;
+}
+
+.btnOperation:active
+{
+    background-color: #666;;
+}
+
+.btnMultiply
+{
+    font-size: 10px;
+}
+
+.btnEquals
+{
+    background: #555;
+    color: #fff;
+}
+
+.btnEquals:hover
+{
+    background-color: #444;;
+}
+
+.btnEquals:active
+{
+    background-color: #333;;
+}
+
+.btnZero
+{
+    grid-column: span 2;
+    text-align: left;
+    padding-left: 20px;
+}
