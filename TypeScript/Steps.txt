@@ -1,0 +1,4 @@
+1.	Install Git
+2.	Install Visual Studio Code
+3.	Install nodejs
+4.	Install typescript
