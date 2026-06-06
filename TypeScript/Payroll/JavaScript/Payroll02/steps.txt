@@ -1,0 +1,52 @@
+payroll02/
+├── index.html
+├── css/
+│   └── styles.css
+└── js/
+    ├── validation.js    ← generic validator (loaded first)
+    ├── hourly.js        ← hourly employee module
+    ├── pieceWorker.js   ← pieceworker employee module
+    ├── commission.js    ← commission employee module
+    ├── salaried.js      ← salaried employee module
+    └── script.js        ← orchestrator (loaded last)
+	
+///////////////////////////////////////////////////
+
+index.html — one change only
+============================
+The single <script src="js/script.js"> tag at the bottom 
+was replaced with six ordered tags:
+
+<script src="js/validation.js"></script>
+<script src="js/hourly.js"></script>
+<script src="js/pieceWorker.js"></script>
+<script src="js/commission.js"></script>
+<script src="js/salaried.js"></script>
+<script src="js/script.js"></script>
+
+styles.css — zero changes
+Copied byte-for-byte.
+
+The six JavaScript files
+========================
+validation.js - Contains only validateNumericInput(). 
+Loaded first so every other file can call it.
+
+hourly.jsHourly constants, calculateHourlyGrossPay(), and 
+validateAndCalculateHourly()
+
+pieceWorker.jsPieceWorker constants, calculatePieceWorkerGrossPay(), 
+and validateAndCalculatePieceWorker()
+
+commission.jsCommission constants, calculateCommissionGrossPay(), 
+and validateAndCalculateCommission()
+
+salaried.jsSalaried constants, calculateSalariedGrossPay(), 
+and validateAndCalculateSalaried()
+
+script.jsAll DOM references, accumulators, UI helpers, event listeners, 
+and onCalculate() — which now just calls the module's 
+validateAndCalculate() function and handles the result
+
+///////////////////////////////////////////////////
+
