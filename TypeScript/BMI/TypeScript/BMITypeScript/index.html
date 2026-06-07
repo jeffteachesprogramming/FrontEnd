@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator Version03</title>
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+    <div class="container">
+        <h1>BMI Calculator Version03</h1>
+
+        <form id="bmiForm">
+            <label for="height">Height (inches):</label>
+            <input type="number" id="height" placeholder="Enter Height In Inches" required><br>
+            <label for="height">Weight (pounds):</label>
+            <input type="number" id="weight" placeholder="Enter Weight In Pounds" required><br>
+            <button type="button" id="calculateBtn">Calculate BMI</button>
+            <button type="button" id="clearFormBtn">Clear The Form</button>
+            <button type="button" id="showTotalsBtn">Show Totals</button><br>
+        </form>
+
+        <div id="result">
+            <h2>BMI: <span id="bmiValue">0</span></h2><br>
+            <p id="bmiStatus">Category: </p>
+        </div>
+    </div>
+
+    <div id="totalsOverlay" role="dialog" aria-modal="true" aria-labelledby="totalsTitle">
+        <div id="totalsBox">
+            <h2 id="totalsTitle">BMI Totals</h2>
+            <p><span class="accLabel">Underweight:</span><span id="totalUnderweight">0</span></p>
+            <p><span class="accLabel">Optimal Weight:</span><span id="totalOptimalWeight">0</span></p>
+            <p><span class="accLabel">Overweight:</span><span id="totalOverweight">0</span></p>
+            <p><span class="accLabel">Obese:</span><span id="totalObese">0</span></p>
+            <!--<button type="button" id="closeTotalsBoxBtn">Close Totals Box</button>-->
+            <div class="closeTotalsBoxBtnWrapper">
+                <button id="closeTotalsBoxBtn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script defer src="js/BMITS.js"></script>
+</body>
+</html>
