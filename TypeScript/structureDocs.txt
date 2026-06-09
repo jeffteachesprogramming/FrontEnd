@@ -1,0 +1,57 @@
+BMITS
+|
+|-----	index.html
+|
+|-----	css/
+|	|___	styles.css
+|
+|-----	ts/
+|	|___	bmiTS.ts
+|
+|-----	js/
+|	|___	bmiTS.js
+
+////////////////////////////
+
+PayrollTS
+|
+|-----	index.html
+|
+|-----	css/
+|	|___	styles.css
+|
+|-----	ts/
+|	|___	payroll.ts
+|	|___	hourly.ts
+|	|___	pieceworker.ts
+|	|___	commission.ts
+|	|___	salaried.ts
+|	|___	validation.ts
+|
+|-----	js/
+|	|___	payroll.js
+|	|___	hourly.js
+|	|___	pieceworker.js
+|	|___	commission.js
+|	|___	salaried.js
+|	|___	validation.js
+
+Interface for each of these.
+Fully tpe all variables, function parameters, and return types
+---------
+hourly.ts
+pieceworker.ts
+commission.ts
+salaried.ts
+
+Interface, typed parameters
+-------------
+validation.ts
+
+
+All DOM references will be set up as either
+HTMLInputElement, HTMLButtonElement or HTMLSelectElement
+Accumulators will each be typed as a type number
+Event callbacks typed
+-------------
+payroll.ts

@@ -1,0 +1,356 @@
+*, *::before, *::after
+{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html
+{
+    font-size: 16px;
+}
+
+body
+{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f4f4;
+    color: #222;
+    min-height: 100vh;
+}
+
+#appHeader
+{
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+    padding: 12px 24px;
+}
+
+#appHeader h1
+{
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+#appHeader p
+{
+    font-size: 0.85rem;
+    color: #555;
+    margin-top: 2px;
+}
+
+#mainContent
+{
+    max-width: 960px;
+    margin: 24px auto;
+    padding: 0 16px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+#inputCard
+{
+    flex: 1.1;
+}
+
+.resultsCard
+{
+    flex: 0.9;
+    min-height: 260px;
+}
+
+.cardTitle
+{
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.formGroup
+{
+    margin-bottom: 14px;
+}
+
+label
+{
+    display:block;
+    font-size: 0.85rem;
+    color: #444;
+    margin-bottom: 4px;
+}
+
+select,
+input[type="number"]
+{
+    width: 100%;
+    padding:6px 10px;
+    font-size: 0.9rem;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #222;
+}
+
+select:focus,
+input[type="number"]:focus
+{
+    outline: 2px solid #555;
+}
+
+.prefixWrap
+{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.prefixWrap span
+{
+    font-size: 0.9rem;
+    color: #444;
+}
+
+.prefixWrap input{
+    flex: 1;
+}
+
+.typeFields
+{
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 14px;
+    margin-bottom: 8px;
+    background-color: #fafafa;
+}
+
+.typeFields legend
+{
+    font-size: 0.85rem;
+    color: #555;
+    padding: 0 6px;
+    margin-bottom: 10px;
+}
+
+.hidden
+{
+    display: none !important;
+}
+
+.btnRow
+{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px
+}
+
+button
+{
+    padding: 6px 14px;
+    font-size: 0.875rem;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #222;
+    cursor: pointer;
+}
+
+button:hover
+{
+    background-color: #f0f0f0;
+}
+
+button:active
+{
+    background-color: #e4e4e4;
+}
+
+.btnPrimary
+{
+    background-color: #222;
+    color: #fff;
+    border-color: #222;
+}
+
+.btnPrimary:hover
+{
+    background-color: #444;
+    border-color: #444;
+}
+
+#errorMsg
+{
+    font-size: 0.82rem;
+    color: #c00;
+    margin-top: 10px;
+    min-height: 1.2em;
+}
+
+#resultsPlaceholder
+{
+    font-size: 0.875rem;
+    color: #666;
+    padding: 32px 0;
+    text-align: center;
+}
+
+#resultsList
+{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.resultItem
+{
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px 14px;
+}
+
+.resultType
+{
+    font-size: 0.75rem;
+    color: #666;
+    margin-bottom: 2px;
+}
+
+.resultAmount
+{
+    font-size: 1rem;
+    font-weight:bold;
+    font-family: monospace;
+}
+
+.resultDetail
+{
+    font-size: 0.78rem;
+    color: #666;
+    margin-top: 2px;
+    font-family: monospace;
+}
+
+.modalOverlay
+{
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    padding: 16px;
+}
+
+.modalBox
+{
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 24px;
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+}
+
+.modalClose
+{
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    background: none;
+    border: none;
+    font-size: 1.3rem;
+    color: #555;
+    cursor: pointer;
+}
+
+.modalClose:hover{
+    color: #000;
+}
+
+#modalTitle
+{
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 16px;
+}
+
+.modalSubtitle
+{
+  font-size: 0.8rem;
+  color: #666;
+  margin-bottom: 16px;
+}
+
+.totalsGrid
+{
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px 16px;
+    margin-bottom: 16px;
+}
+
+.totalsGrid dt
+{
+    font-size: 0.875rem;
+    color: #444;
+}
+
+.totalsGrid dd{
+    font-size: 0.875rem;
+    font-family: monospace;
+    text-align: right;
+}
+
+.grandTotalRow
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top:1px solid #ccc;
+    padding-top: 12px;
+}
+
+.grandTotalRow span:first-child
+{
+    font-size: 0.875rem;
+    font-weight: bold;
+}
+
+.grandTotalRow span:last-child
+{
+    font-size: 1.1rem;
+    font-weight: bold;
+    font-family: monospace;
+}
+
+@media (max-width: 680px)
+{
+    #mainContent
+    {
+        flex-direction: column;
+        padding: 0 12px;
+        margin: 16px auto;
+    }
+
+    #inputCard,
+    #resultsCard
+    {
+        flex: none;
+        width: 100%;
+    }
+
+    .btnRow
+    {
+        flex-direction: column;
+    }
+
+    button
+    {
+        width: 100%;    
+    }
+}
